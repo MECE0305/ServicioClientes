@@ -20,22 +20,22 @@ public class PromedioController {
 	@Autowired
 	private PromedioServiceImp promedioServicio;
 	
-	@GetMapping("/listarPromedios")
+	@GetMapping("/listar")
 	public List<Promedio> listarPromedios(){
 		return promedioServicio.findAll();
 	}
 	
-	@GetMapping("/promedio/{id}")
+	@GetMapping("/ver/{id}")
 	public Promedio verItem(@PathVariable Long id){
 		return promedioServicio.findById(id);
 	}
 	
-	@PostMapping("/crearPromedio/{promedio}")
+	@PostMapping("/crear/{promedio}")
 	public Promedio crear(@PathVariable Promedio promedio){
 		return promedioServicio.save(promedio);
 	}
 	
-	@DeleteMapping("/eliminarPromedio/{id}")
+	@DeleteMapping("/eliminar/{id}")
 	public void eliminar(@PathVariable Long id){
 		promedioServicio.deleteById(id);
 	}

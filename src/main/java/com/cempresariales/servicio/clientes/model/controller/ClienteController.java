@@ -4,14 +4,13 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -30,18 +29,37 @@ public class ClienteController {
 		return promedioServicio.findAll();
 	}
 	
-	@GetMapping("/cliente/{id}")
+	@GetMapping("/ver/{id}")
 	public Cliente verItem(@PathVariable Long id){
 		return promedioServicio.findById(id);
 	}
 	
 	
 	@PostMapping(path = "/crear")
-	@ResponseStatus(HttpStatus.CREATED)
-	//@RequestMapping(value = "/crear", method = RequestMethod.POST, produces = "application/jsoncharset=UTF-8")
+	@ResponseStatus(HttpStatus.CREATED)	
 	public Cliente crear(@RequestBody Cliente cliente){
 		return promedioServicio.save(cliente);
 	}
+	
+	@PutMapping("/editar/{id}")
+	@ResponseStatus(HttpStatus.CREATED)
+	public Cliente editar(@RequestBody Cliente cliente, @PathVariable Long id) {
+		Cliente clienteDb = promedioServicio.findById(id);
+		
+		clienteDb.setNombre(cliente.getNombre());
+		clienteDb.setCi(cliente.getCi());
+		clienteDb.setTelefono(cliente.getTelefono());
+		clienteDb.setMail(cliente.getMail());
+		clienteDb.setCeo(cliente.getCeo());
+		clienteDb.setFoto(cliente.getFoto());
+		clienteDb.setDireccion(cliente.getDireccion());
+		clienteDb.setUr(cliente.getUr());
+		clienteDb.setActivo(cliente.getActivo());
+		clienteDb.setActualiza(cliente.getActualiza());
+				
+        return promedioServicio.save(clienteDb);
+	}
+	
 	
 	@DeleteMapping("/eliminar/{id}")
 	public void eliminar(@PathVariable Long id){
