@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cempresariales.servicio.commons.model.entity.Cliente;
+import com.cempresariales.servicio.commons.model.entity.DatosEmpresa;
 import com.cempresariales.servicio.commons.model.entity.Empresa;
 import com.cempresariales.servicio.clientes.model.service.EmpresaServiceImp;
 
@@ -28,6 +29,11 @@ public class EmpresaController {
 	@GetMapping("/listar")
 	public List<Empresa> listarEmpresas(){
 		return empresaServicio.findAll();
+	}
+	
+	@GetMapping("/listarPorIdCli/{idCliente}")
+	public List<Empresa> listarEmpresaCli(@PathVariable Long idCliente){
+		return empresaServicio.empresaAll(idCliente);
 	}
 	
 	@GetMapping("/ver/{id}")
