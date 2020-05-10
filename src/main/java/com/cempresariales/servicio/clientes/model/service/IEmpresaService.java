@@ -2,7 +2,6 @@ package com.cempresariales.servicio.clientes.model.service;
 
 import java.util.List;
 
-import com.cempresariales.servicio.commons.model.entity.DatosEmpresa;
 import com.cempresariales.servicio.commons.model.entity.Empresa;
 
 public interface IEmpresaService {

@@ -46,16 +46,7 @@ public class ClienteController {
 	public Cliente editar(@RequestBody Cliente cliente, @PathVariable Long id) {
 		Cliente clienteDb = promedioServicio.findById(id);
 		
-		clienteDb.setNombre(cliente.getNombre());
-		clienteDb.setCi(cliente.getCi());
-		clienteDb.setTelefono(cliente.getTelefono());
-		clienteDb.setMail(cliente.getMail());
-		clienteDb.setCeo(cliente.getCeo());
-		clienteDb.setFoto(cliente.getFoto());
-		clienteDb.setDireccion(cliente.getDireccion());
-		clienteDb.setUr(cliente.getUr());
-		clienteDb.setActivo(cliente.getActivo());
-		clienteDb.setActualiza(cliente.getActualiza());
+		cliente.setIdCliente(cliente.getIdCliente());
 				
         return promedioServicio.save(clienteDb);
 	}
