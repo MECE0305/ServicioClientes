@@ -23,37 +23,35 @@ public class ClienteController {
 
 	@Autowired
 	private ClienteServiceImp promedioServicio;
-	
+
 	@GetMapping("/listar")
-	public List<Cliente> listarCliente(){
+	public List<Cliente> listarCliente() {
 		return promedioServicio.findAll();
 	}
-	
+
 	@GetMapping("/ver/{id}")
-	public Cliente verItem(@PathVariable Long id){
+	public Cliente verItem(@PathVariable Long id) {
 		return promedioServicio.findById(id);
 	}
-	
-	
+
 	@PostMapping(path = "/crear")
-	@ResponseStatus(HttpStatus.CREATED)	
-	public Cliente crear(@RequestBody Cliente cliente){
+	@ResponseStatus(HttpStatus.CREATED)
+	public Cliente crear(@RequestBody Cliente cliente) {
 		return promedioServicio.save(cliente);
 	}
-	
+
 	@PutMapping("/editar/{id}")
 	@ResponseStatus(HttpStatus.CREATED)
 	public Cliente editar(@RequestBody Cliente cliente, @PathVariable Long id) {
 		Cliente clienteDb = promedioServicio.findById(id);
-		
-		cliente.setIdCliente(cliente.getIdCliente());
-				
-        return promedioServicio.save(clienteDb);
+		clienteDb = cliente;
+		clienteDb.setIdCliente(cliente.getIdCliente());
+
+		return promedioServicio.save(clienteDb);
 	}
-	
-	
+
 	@DeleteMapping("/eliminar/{id}")
-	public void eliminar(@PathVariable Long id){
+	public void eliminar(@PathVariable Long id) {
 		promedioServicio.deleteById(id);
 	}
 }

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.cempresariales.servicio.clientes.model.dao.EmpresaDao;
+import com.cempresariales.servicio.commons.model.entity.Cliente;
 import com.cempresariales.servicio.commons.model.entity.Empresa;
 
 @Service
@@ -53,6 +54,12 @@ public class EmpresaServiceImp implements IEmpresaService {
 		list.add(empresa);
 		
 		return list;
+	}
+
+	@Override
+	public List<Empresa> findByClienteIdCliente(Cliente cliente) {
+		return empresaDao.findByClienteIdCliente(cliente);
+
 	}
 
 }

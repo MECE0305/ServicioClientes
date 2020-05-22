@@ -18,7 +18,7 @@ import com.cempresariales.servicio.clientes.model.service.SectorServiceImp;
 import com.cempresariales.servicio.commons.model.entity.Sector;
 
 @RestController
-@RequestMapping(value = "Sector")
+@RequestMapping(value = "sector")
 public class SectorController {
 
 	@Autowired
