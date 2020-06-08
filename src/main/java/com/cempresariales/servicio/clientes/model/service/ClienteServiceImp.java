@@ -9,11 +9,11 @@ import com.cempresariales.servicio.clientes.model.dao.ClienteDao;
 import com.cempresariales.servicio.commons.model.entity.Cliente;
 
 @Service
-public class ClienteServiceImp implements IClienteService{
+public class ClienteServiceImp implements IClienteService {
 
 	@Autowired
 	private ClienteDao clienteDao;
-	
+
 	@Override
 	public List<Cliente> findAll() {
 		return (List<Cliente>) clienteDao.findAll();
@@ -31,7 +31,12 @@ public class ClienteServiceImp implements IClienteService{
 
 	@Override
 	public void deleteById(Long id) {
-		clienteDao.deleteById(id);
+		try {
+			clienteDao.deleteById(id);
+		} catch (Exception e) {
+
+		}
+
 	}
 
 }

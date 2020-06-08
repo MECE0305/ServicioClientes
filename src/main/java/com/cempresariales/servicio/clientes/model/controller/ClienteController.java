@@ -2,6 +2,8 @@ package com.cempresariales.servicio.clientes.model.controller;
 
 import java.util.List;
 
+import javax.ws.rs.core.Response;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -14,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cempresariales.servicio.commons.model.entity.Cliente;
 import com.cempresariales.servicio.clientes.model.service.ClienteServiceImp;
+import com.cempresariales.servicio.commons.model.entity.Cliente;
 
 @RestController
 @RequestMapping(value = "cliente")
@@ -51,7 +53,13 @@ public class ClienteController {
 	}
 
 	@DeleteMapping("/eliminar/{id}")
-	public void eliminar(@PathVariable Long id) {
-		promedioServicio.deleteById(id);
+	public Response eliminar(@PathVariable Long id) {
+		try {
+
+			promedioServicio.deleteById(id);
+			return Response.ok(HttpStatus.ACCEPTED).build();
+		} catch (Exception e) {
+			return Response.noContent().build();
+		}
 	}
 }
