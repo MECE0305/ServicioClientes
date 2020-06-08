@@ -2,8 +2,6 @@ package com.cempresariales.servicio.clientes.model.controller;
 
 import java.util.List;
 
-import javax.ws.rs.core.Response;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -20,6 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cempresariales.servicio.clientes.model.service.ClienteServiceImp;
 import com.cempresariales.servicio.commons.model.entity.Cliente;
+
+import feign.Response;
 
 @RestController
 @CrossOrigin(origins = "*", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.OPTIONS })
@@ -56,13 +56,13 @@ public class ClienteController {
 	}
 
 	@DeleteMapping("/eliminar/{id}")
-	public Response eliminar(@PathVariable Long id) {
+	public void eliminar(@PathVariable Long id) {
 		try {
 
 			promedioServicio.deleteById(id);
-			return Response.ok(HttpStatus.ACCEPTED).build();
+
 		} catch (Exception e) {
-			return Response.noContent().build();
+
 		}
 	}
 }
