@@ -20,7 +20,8 @@ import com.cempresariales.servicio.clientes.model.service.SectorServiceImp;
 import com.cempresariales.servicio.commons.model.entity.Sector;
 
 @RestController
-@CrossOrigin(origins = "*", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.OPTIONS })
+@CrossOrigin(origins = "*", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT,
+		RequestMethod.OPTIONS })
 @RequestMapping(value = "sector")
 public class SectorController {
 
@@ -47,7 +48,7 @@ public class SectorController {
 	@ResponseStatus(HttpStatus.CREATED)
 	public Sector editar(@RequestBody Sector entidad, @PathVariable Long id) {
 		Sector entidadDb = service.findById(id);
-
+		entidadDb = entidad;
 		entidad.setIdSector(entidadDb.getIdSector());
 
 		return service.save(entidadDb);
