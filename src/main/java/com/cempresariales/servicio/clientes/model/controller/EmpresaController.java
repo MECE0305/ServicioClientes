@@ -21,7 +21,7 @@ import com.cempresariales.servicio.commons.model.entity.Cliente;
 import com.cempresariales.servicio.commons.model.entity.Empresa;
 
 @RestController
-@CrossOrigin(origins = "*", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.OPTIONS })
+@CrossOrigin(origins = "*", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.OPTIONS })
 @RequestMapping(value = "empresa")
 public class EmpresaController {
 

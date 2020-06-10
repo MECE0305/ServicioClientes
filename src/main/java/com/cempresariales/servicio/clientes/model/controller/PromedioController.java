@@ -17,7 +17,7 @@ import com.cempresariales.servicio.commons.model.entity.Promedio;
 import com.cempresariales.servicio.clientes.model.service.PromedioServiceImp;
 
 @RestController
-@CrossOrigin(origins = "*", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.OPTIONS })
+@CrossOrigin(origins = "*", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.OPTIONS })
 @RequestMapping(value = "promedio")
 public class PromedioController {
 

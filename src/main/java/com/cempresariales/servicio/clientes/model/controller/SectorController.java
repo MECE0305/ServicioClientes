@@ -20,7 +20,7 @@ import com.cempresariales.servicio.clientes.model.service.SectorServiceImp;
 import com.cempresariales.servicio.commons.model.entity.Sector;
 
 @RestController
-@CrossOrigin(origins = "*", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.OPTIONS })
+@CrossOrigin(origins = "*", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.OPTIONS })
 @RequestMapping(value = "sector")
 public class SectorController {
 

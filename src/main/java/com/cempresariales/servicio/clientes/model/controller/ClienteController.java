@@ -22,7 +22,7 @@ import com.cempresariales.servicio.commons.model.entity.Cliente;
 import feign.Response;
 
 @RestController
-@CrossOrigin(origins = "*", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.OPTIONS })
+@CrossOrigin(origins = "*", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.OPTIONS })
 @RequestMapping(value = "cliente")
 public class ClienteController {
 
