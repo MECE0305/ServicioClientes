@@ -55,7 +55,7 @@ public class Sector implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date creaSector;
     @Column(name = "activo_sector")
-    private boolean activoSector;
+    private Boolean activoSector;
     @Column(name = "descripcion_sector")
     private String descripcionSector;
     @Column(name = "nombre_sector")
@@ -75,11 +75,11 @@ public class Sector implements Serializable {
     
     
     
-    public boolean getActivoSector() {
+    public Boolean getActivoSector() {
 		return activoSector;
 	}
 
-	public void setActivoSector(boolean activoSector) {
+	public void setActivoSector(Boolean activoSector) {
 		this.activoSector = activoSector;
 	}
 
