@@ -27,7 +27,7 @@ public class EvaluacionHasEncabezadoPK implements Serializable {
     public EvaluacionHasEncabezadoPK() {
     }
 
-    public EvaluacionHasEncabezadoPK(long evaluacionIdEvaluacion, int encabezadoIdEncabezado) {
+    public EvaluacionHasEncabezadoPK(long evaluacionIdEvaluacion, long encabezadoIdEncabezado) {
         this.evaluacionIdEvaluacion = evaluacionIdEvaluacion;
         this.encabezadoIdEncabezado = encabezadoIdEncabezado;
     }

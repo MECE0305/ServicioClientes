@@ -6,7 +6,7 @@
 package com.cempresariales.servicio.commons.model.entity;
 
 import java.io.Serializable;
-import java.math.BigInteger;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,8 +16,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -37,14 +35,10 @@ public class Respuesta implements Serializable {
     @Column(name = "id_respuesta")
     private Long idRespuesta;
     @Basic(optional = false)
-    @Column(name = "categoria_id_categoria")
-    private Long categoriaIdCategoria;
+    @Column(name = "id_catalogo_pregunta")
+    private Long idCatalogoPregunta;
     @Column(name = "cumple_respuesta")
     private boolean cumpleRespuesta;
-    @Column(name = "pregunta_id_pregunta")
-    private Long preguntaIdPregunta;
-    @Column(name = "peso_id_peso")
-    private Long pesoIdPeso;
     @Column(name = "observacion_respuesta")
     private String observacionRespuesta;
     @Column(name = "no_procede")
@@ -62,15 +56,19 @@ public class Respuesta implements Serializable {
         this.idRespuesta = idRespuesta;
     }
 
-    public Respuesta(Long idRespuesta, long categoriaIdCategoria) {
-        this.idRespuesta = idRespuesta;
-        this.categoriaIdCategoria = categoriaIdCategoria;
-    }
     
     
     
 
-    public String getNoProcede() {
+    public Long getIdCatalogoPregunta() {
+		return idCatalogoPregunta;
+	}
+
+	public void setIdCatalogoPregunta(Long idCatalogoPregunta) {
+		this.idCatalogoPregunta = idCatalogoPregunta;
+	}
+
+	public String getNoProcede() {
 		return noProcede;
 	}
 
@@ -78,22 +76,7 @@ public class Respuesta implements Serializable {
 		this.noProcede = noProcede;
 	}
 
-	public Long getPreguntaIdPregunta() {
-		return preguntaIdPregunta;
-	}
-
-	public void setPreguntaIdPregunta(Long preguntaIdPregunta) {
-		this.preguntaIdPregunta = preguntaIdPregunta;
-	}
-
-	public Long getPesoIdPeso() {
-		return pesoIdPeso;
-	}
-
-	public void setPesoIdPeso(Long pesoIdPeso) {
-		this.pesoIdPeso = pesoIdPeso;
-	}
-
+	
 	
 	public Long getIdRespuesta() {
         return idRespuesta;
@@ -103,13 +86,7 @@ public class Respuesta implements Serializable {
         this.idRespuesta = idRespuesta;
     }
 
-    public long getCategoriaIdCategoria() {
-        return categoriaIdCategoria;
-    }
-
-    public void setCategoriaIdCategoria(long categoriaIdCategoria) {
-        this.categoriaIdCategoria = categoriaIdCategoria;
-    }
+  
 
     public boolean getCumpleRespuesta() {
         return cumpleRespuesta;
