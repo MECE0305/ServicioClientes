@@ -72,6 +72,8 @@ public class Agencia implements Serializable {
 	@JoinColumn(name = "empresa_id_empresa", referencedColumnName = "id_empresa")
 	@ManyToOne(optional = false)
 	private Empresa empresaIdEmpresa;
+	@Column(name = "id_zona_estructural")
+	private Long idZonaEstructural;
 
 	public Agencia() {
 	}
@@ -81,6 +83,14 @@ public class Agencia implements Serializable {
 	}
 	
 	
+
+	public Long getIdZonaEstructural() {
+		return idZonaEstructural;
+	}
+
+	public void setIdZonaEstructural(Long idZonaEstructural) {
+		this.idZonaEstructural = idZonaEstructural;
+	}
 
 	public String getDireccionAgencia() {
 		return direccionAgencia;

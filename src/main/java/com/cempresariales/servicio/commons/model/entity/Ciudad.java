@@ -62,6 +62,8 @@ public class Ciudad implements Serializable {
     @JoinColumn(name = "provincia_id_provincia", referencedColumnName = "id_provincia")
     @ManyToOne(optional = false)
     private Provincia provinciaIdProvincia;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "ciudad")
+    private List<ZonaEstructuralHasCiudad> zonaEstructuralHasCiudadList;
 
     public Ciudad() {
     }
@@ -117,6 +119,15 @@ public class Ciudad implements Serializable {
 
     public void setProvinciaIdProvincia(Provincia provinciaIdProvincia) {
         this.provinciaIdProvincia = provinciaIdProvincia;
+    }
+    
+    @XmlTransient
+    public List<ZonaEstructuralHasCiudad> getZonaEstructuralHasCiudadList() {
+        return zonaEstructuralHasCiudadList;
+    }
+
+    public void setZonaEstructuralHasCiudadList(List<ZonaEstructuralHasCiudad> zonaEstructuralHasCiudadList) {
+        this.zonaEstructuralHasCiudadList = zonaEstructuralHasCiudadList;
     }
 
     @Override

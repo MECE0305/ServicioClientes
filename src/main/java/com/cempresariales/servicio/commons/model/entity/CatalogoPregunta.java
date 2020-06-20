@@ -43,6 +43,8 @@ public class CatalogoPregunta implements Serializable {
     @Basic(optional = false)
     @Column(name = "id_catalogo_pregunta")
     private long idCatalogoPregunta;
+    @Column(name = "orden_pregunta")
+    private int ordenPregunta;
     @Column(name = "activo_catalogo_pregunta")
     private boolean activoCatalogoPregunta;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "catalogoPregunta")
@@ -68,8 +70,19 @@ public class CatalogoPregunta implements Serializable {
         this.catalogoPreguntaPK = catalogoPreguntaPK;
         this.idCatalogoPregunta = idCatalogoPregunta;
     }
+    
+    
+    
 
-    public CatalogoPregunta(long categoriaIdCategoria, long preguntaIdPregunta, long pesoIdPeso) {
+    public int getOrdenPregunta() {
+		return ordenPregunta;
+	}
+
+	public void setOrdenPregunta(int ordenPregunta) {
+		this.ordenPregunta = ordenPregunta;
+	}
+
+	public CatalogoPregunta(long categoriaIdCategoria, long preguntaIdPregunta, long pesoIdPeso) {
         this.catalogoPreguntaPK = new CatalogoPreguntaPK(categoriaIdCategoria, preguntaIdPregunta, pesoIdPeso);
     }
 

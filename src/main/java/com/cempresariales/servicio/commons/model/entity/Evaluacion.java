@@ -108,13 +108,15 @@ public class Evaluacion implements Serializable {
 	private Long idEmpleado;
 	@Column(name = "id_evaluacion_historial")
 	private Long idEvaluacionHistorial;
-
+	
 	public Evaluacion() {
 	}
 
 	public Evaluacion(Long idEvaluacion) {
 		this.idEvaluacion = idEvaluacion;
 	}
+
+	
 
 	public Long getIdEmpleado() {
 		return idEmpleado;

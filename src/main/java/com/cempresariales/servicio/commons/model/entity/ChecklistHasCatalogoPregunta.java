@@ -41,6 +41,8 @@ public class ChecklistHasCatalogoPregunta implements Serializable {
     protected ChecklistHasCatalogoPreguntaPK checklistHasCatalogoPreguntaPK;
     @Column(name = "activo")
     private Boolean activo;
+    @Column(name = "orden_bloque")
+    private int ordenBloque;
     @JoinColumns({
         @JoinColumn(name = "catalogo_pregunta_categoria_id_categoria", referencedColumnName = "categoria_id_categoria", insertable = false, updatable = false)
         , @JoinColumn(name = "catalogo_pregunta_pregunta_id_pregunta", referencedColumnName = "pregunta_id_pregunta", insertable = false, updatable = false)
@@ -71,8 +73,20 @@ public class ChecklistHasCatalogoPregunta implements Serializable {
     public void setChecklistHasCatalogoPreguntaPK(ChecklistHasCatalogoPreguntaPK checklistHasCatalogoPreguntaPK) {
         this.checklistHasCatalogoPreguntaPK = checklistHasCatalogoPreguntaPK;
     }
+    
+    
+    
+    
 
-    public Boolean getActivo() {
+    public int getOrdenBloque() {
+		return ordenBloque;
+	}
+
+	public void setOrdenBloque(int ordenBloque) {
+		this.ordenBloque = ordenBloque;
+	}
+
+	public Boolean getActivo() {
         return activo;
     }
 
