@@ -8,6 +8,7 @@ package com.cempresariales.servicio.commons.model.entity;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -27,6 +28,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  *
@@ -75,6 +77,10 @@ public class Empresa implements Serializable {
 	@JoinColumn(name = "sector_id_sector", referencedColumnName = "id_sector")
 	@ManyToOne(optional = false)
 	private Sector sectorIdSector;
+
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "empresa")
+	@JsonIgnore
+	private List<RangoDesempenio> rangoDesempenioList;
 
 	public Empresa() {
 	}
@@ -137,6 +143,15 @@ public class Empresa implements Serializable {
 
 	public void setTelefonoEmpresa(String telefonoEmpresa) {
 		this.telefonoEmpresa = telefonoEmpresa;
+	}
+
+	@XmlTransient
+	public List<RangoDesempenio> getRangoDesempenioList() {
+		return rangoDesempenioList;
+	}
+
+	public void setRangoDesempenioList(List<RangoDesempenio> rangoDesempenioList) {
+		this.rangoDesempenioList = rangoDesempenioList;
 	}
 
 	@XmlTransient

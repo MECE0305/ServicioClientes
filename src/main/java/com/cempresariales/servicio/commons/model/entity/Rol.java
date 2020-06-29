@@ -15,6 +15,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -59,6 +61,11 @@ public class Rol implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "rolIdRol")
     @JsonIgnore
     private List<Checklist> checklistList;
+    @JoinColumn(name = "area_id_area", referencedColumnName = "id_area")
+	@ManyToOne(optional = false)
+	private Area areaIdArea;
+    
+    
 
     public Rol() {
     }
@@ -66,8 +73,19 @@ public class Rol implements Serializable {
     public Rol(Long idRol) {
         this.idRol = idRol;
     }
+    
+    
+    
 
-    public Long getIdRol() {
+    public Area getAreaIdArea() {
+		return areaIdArea;
+	}
+
+	public void setAreaIdArea(Area areaIdArea) {
+		this.areaIdArea = areaIdArea;
+	}
+
+	public Long getIdRol() {
         return idRol;
     }
 
