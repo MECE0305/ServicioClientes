@@ -37,6 +37,11 @@ public class RangoController {
 	public RangoDesempenio verItem(@PathVariable Long id) {
 		return service.findById(id);
 	}
+	
+	@GetMapping("/findByRangoAndEmpresa/{rango}/{idEmpresa}")
+	public RangoDesempenio findByRangoAndEmpresa(@PathVariable Double rango, @PathVariable Long idEmpresa) {
+		return service.findByRangoAndEmpresa(rango, idEmpresa);
+	}
 
 	@PostMapping(path = "/crear")
 	@ResponseStatus(HttpStatus.CREATED)

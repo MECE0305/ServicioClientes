@@ -108,6 +108,12 @@ public class Evaluacion implements Serializable {
 	private Long idEmpleado;
 	@Column(name = "id_evaluacion_historial")
 	private Long idEvaluacionHistorial;
+	@Column(name = "id_usuario_crea")
+	private Long idUsuarioCrea;
+	@Column(name = "id_usuario_planifica")
+	private Long idUsuarioPlanifica;
+	@Column(name = "id_usuario_ejecuta")
+	private Long idUsuarioEjecuta;
 	
 	public Evaluacion() {
 	}

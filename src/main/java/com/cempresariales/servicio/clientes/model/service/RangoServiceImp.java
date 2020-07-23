@@ -34,4 +34,9 @@ public class RangoServiceImp implements RangoService {
 		repo.deleteById(id);
 	}
 
+	@Override
+	public RangoDesempenio findByRangoAndEmpresa(Double rango, Long idEmpresa) {
+		return repo.findByRangoAndEmpresa(rango, idEmpresa);
+	}
+
 }

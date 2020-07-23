@@ -13,4 +13,6 @@ public interface RangoService {
 	public RangoDesempenio save(RangoDesempenio entidad);
 
 	public void deleteById(Long id);
+	
+	public RangoDesempenio findByRangoAndEmpresa(Double rango, Long idEmpresa);
 }
