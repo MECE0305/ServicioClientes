@@ -61,7 +61,7 @@ public class Sector implements Serializable {
     @Column(name = "nombre_sector")
     private String nombreSector;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "sectorIdSector")
-    @JsonBackReference
+    @JsonBackReference(value="empresaList")
     private List<Empresa> empresaList;
 
     public Sector() {
