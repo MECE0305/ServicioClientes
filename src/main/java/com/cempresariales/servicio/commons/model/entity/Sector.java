@@ -25,6 +25,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  *
@@ -61,7 +62,7 @@ public class Sector implements Serializable {
     @Column(name = "nombre_sector")
     private String nombreSector;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "sectorIdSector")
-    @JsonBackReference(value="empresaList")
+    @JsonIgnore
     private List<Empresa> empresaList;
 
     public Sector() {

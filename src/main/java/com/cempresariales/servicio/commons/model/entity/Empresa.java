@@ -69,7 +69,7 @@ public class Empresa implements Serializable {
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "empresaIdEmpresa")
 	private List<Promedio> promedioList;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "empresaIdEmpresa")
-	@JsonBackReference(value="agenciaList")
+	@JsonIgnore
 	private List<Agencia> agenciaList;
 	@JoinColumn(name = "cliente_id_cliente", referencedColumnName = "id_cliente")
 	@ManyToOne(optional = false)

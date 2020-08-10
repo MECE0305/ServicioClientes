@@ -25,6 +25,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  *
@@ -79,7 +80,7 @@ public class Cliente implements Serializable {
 	@Column(name = "url_cliente")
 	private String urlCliente;
 	@OneToMany(mappedBy = "clienteIdCliente")
-	@JsonBackReference
+	@JsonIgnore
 	private List<Empresa> empresaList;
 
 	public Cliente() {
