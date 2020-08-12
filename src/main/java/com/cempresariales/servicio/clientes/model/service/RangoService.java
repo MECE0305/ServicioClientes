@@ -15,4 +15,7 @@ public interface RangoService {
 	public void deleteById(Long id);
 	
 	public RangoDesempenio findByRangoAndEmpresa(Double rango, Long idEmpresa);
+	
+	public List<RangoDesempenio> findByEmpresa(Long idEmpresa);
+	
 }

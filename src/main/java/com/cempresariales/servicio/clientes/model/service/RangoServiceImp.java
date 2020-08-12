@@ -39,4 +39,10 @@ public class RangoServiceImp implements RangoService {
 		return repo.findByRangoAndEmpresa(rango, idEmpresa);
 	}
 
+	@Override
+	public List<RangoDesempenio> findByEmpresa(Long idEmpresa) {
+		// TODO Auto-generated method stub
+		return repo.findByEmpresa(idEmpresa);
+	}
+
 }

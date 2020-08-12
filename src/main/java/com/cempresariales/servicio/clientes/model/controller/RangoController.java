@@ -38,6 +38,11 @@ public class RangoController {
 		return service.findById(id);
 	}
 	
+	@GetMapping("/findByEmpresa/{idEmpresa}")
+	public List<RangoDesempenio> findByEmpresa(@PathVariable Long idEmpresa) {
+		return service.findByEmpresa(idEmpresa);
+	}
+	
 	@GetMapping("/findByRangoAndEmpresa/{rango}/{idEmpresa}")
 	public RangoDesempenio findByRangoAndEmpresa(@PathVariable Double rango, @PathVariable Long idEmpresa) {
 		return service.findByRangoAndEmpresa(rango, idEmpresa);
