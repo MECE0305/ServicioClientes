@@ -14,7 +14,7 @@ public interface RangoDao extends JpaRepository<RangoDesempenio, Long> {
 	public RangoDesempenio findByRangoAndEmpresa(@Param("rango") Double rango, @Param("idEmpresa") Long idEmpresa);
 	
 	
-	@Query("select r from RangoDesempenio r where r.empresa.idEmpresa = ?2 and r.activoRango = true")
+	@Query("select r from RangoDesempenio r where r.empresa.idEmpresa = ?1 and r.activoRango = true")
 	public List<RangoDesempenio> findByEmpresa(@Param("idEmpresa") Long idEmpresa);
 	
 
