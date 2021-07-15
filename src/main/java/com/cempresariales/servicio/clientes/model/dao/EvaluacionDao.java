@@ -10,11 +10,14 @@ import org.springframework.data.repository.query.Param;
 import com.cempresariales.servicio.commons.model.entity.ChecklistHasEvaluacion;
 import com.cempresariales.servicio.commons.model.entity.Evaluacion;
 
+
 public interface EvaluacionDao extends JpaRepository<Evaluacion, Long> {
 	
 	
-	  @Query("select eva from Evaluacion eva where eva.idEmpleado in "
-			+ "(select e.idEmpleado from Empleado e where e.agenciaIdAgencia.idAgencia in :expresion)")
+/*	  @Query("select eva from Evaluacion eva where eva.idEmpleado in "
+			+ "(select e.empleadoPK.idEmpleado from Empleado e where e.agencia.idAgencia in :expresion)")*/
+@Query("select eva from Evaluacion eva where eva.idEmpleado in "
+		+ "(select e.idEmpleado from Empleado e where e.agenciaIdAgencia.idAgencia in :expresion)")
 	public List<Evaluacion> findEvaByAgencias(@Param("expresion") Collection<Long> expresion);
 	 
 
@@ -22,5 +25,9 @@ public interface EvaluacionDao extends JpaRepository<Evaluacion, Long> {
 			+ " cle.checklist.idChecklist in (select clcp.checklist.idChecklist from ChecklistHasCatalogoPregunta clcp where clcp.catalogoPregunta.categoria.idCategoria = ?2)")
 	List<Evaluacion> findByEvaluacionCategoria(@Param("idEvaluacion") Long idEvaluacion,
 			@Param("idCategoria") Long idCategoria);
+
+
+
+
 
 }

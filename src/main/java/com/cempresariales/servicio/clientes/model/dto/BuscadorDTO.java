@@ -1,4 +1,4 @@
-package com.cempresariales.servicio.clientes.model.dao;
+package com.cempresariales.servicio.clientes.model.dto;
 
 import java.io.Serializable;
 import java.util.Date;

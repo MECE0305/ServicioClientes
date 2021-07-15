@@ -19,5 +19,7 @@ public interface IRolService {
 	
 	public List<Rol> findRolByEmpleados(Collection<Long> expresion);
 
+	public List<Rol> rolesByAgencias(Collection<Long> IdAgencias);
+
 	
 }

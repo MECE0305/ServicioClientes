@@ -65,6 +65,13 @@ public class RolController {
 		return rolService.findRolByEmpleados(expresion);
 	}
 
+	@PostMapping("/rolesByAgencias")
+	@ResponseStatus(HttpStatus.CREATED)
+	public List<Rol> rolesByAgencias(@RequestBody Collection<Long> expresion) {
+		return rolService.rolesByAgencias(expresion);
+	}
+
+
 	@DeleteMapping("/eliminar/{id}")
 	public void eliminar(@PathVariable Long id) {
 		rolService.delete(id);

@@ -55,7 +55,6 @@ public class AgenciaController {
 	public Agencia editar(@RequestBody Agencia entidad, @PathVariable Long id) {
 		Agencia agenciaDb = agenciaService.findById(id);
 		agenciaDb = entidad;
-		agenciaDb.setIdAgencia(entidad.getIdAgencia());
 
 		return agenciaService.save(agenciaDb);
 	}

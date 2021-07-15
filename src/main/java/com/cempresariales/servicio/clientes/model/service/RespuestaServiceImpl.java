@@ -7,7 +7,9 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
+import com.cempresariales.servicio.clientes.model.dto.DetalleReporteBloquesDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -110,6 +112,31 @@ public class RespuestaServiceImpl implements RespuestaService {
 	public List<Respuesta> findByIdEmpleado(Long idEmpleado) {
 		return respuestaDao.listarByIdEmpleado(idEmpleado);
 	}
+
+
+	/*select sum(valor_calculado_respuesta) from respuesta where cumple_respuesta = true and  checklist_has_evaluacion_evaluacion_id_evaluacion in (
+			select evaluacion_id_evaluacion from checklist_has_evaluacion where activo = true and evaluacion_id_evaluacion in (
+			select id_evaluacion from evaluacion where activo_evaluacion = true and  id_evaluacion = 84 and id_empleado = 223));*/
+	@Override
+	public Double puntuacionEmpleadoByEvaluacion(Long idEvaluacion, Long idEmpleado) {
+		try {
+
+			String queryStr = "select sum(re.valorCalculadoRespuesta) from Respuesta re where re.cumpleRespuesta = true " +
+					"and re.checklistHasEvaluacion.evaluacion.idEvaluacion in (" +
+					"select ce.evaluacion.idEvaluacion from ChecklistHasEvaluacion ce where ce.activo = true and ce.evaluacion.idEvaluacion in (" +
+					"select ev.idEvaluacion from Evaluacion ev where ev.activoEvaluacion = true and  ev.idEvaluacion = ?1 and ev.idEmpleado = ?2))";
+			Query consulta =
+					entityManager.createQuery(queryStr);
+			consulta.setParameter(1, idEvaluacion);
+			consulta.setParameter(2, idEmpleado);
+
+			return (Double) consulta.getSingleResult();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return 0.00;
+		}
+	}
+
 
 
 }

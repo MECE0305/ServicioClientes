@@ -23,6 +23,8 @@ public interface RespuestaService {
 
 	public List<Respuesta> findByIdEmpresa(@Param("idEmpresa") Long idEmpresa);
 	public List<Respuesta> findByIdEmpleado(@Param("idEmpleado") Long idEmpleado);
-	
+
+	public Double puntuacionEmpleadoByEvaluacion(Long idEvaluacion, Long idEmpleado);
+
 
 }

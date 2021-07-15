@@ -58,7 +58,7 @@ public class CiudadController {
 		ciudadServicio.deleteById(id);
 	}
 	
-	
+	// FIXME: acomodar la relacion a zonaestructural ciudad par la busqueda
 	@PostMapping("/findCiudadesByAgencias")
 	@ResponseStatus(HttpStatus.CREATED)
 	public List<Ciudad> findCiudadesByAgencias(@RequestBody Collection<Long> expresion) {

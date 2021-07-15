@@ -19,40 +19,40 @@ import com.cempresariales.servicio.commons.model.entity.RolHasEmpleado;
 import com.cempresariales.servicio.commons.model.entity.RolHasEmpleadoPK;
 
 @RestController
-@CrossOrigin(origins = "*", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.OPTIONS })
+@CrossOrigin(origins = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.OPTIONS})
 @RequestMapping(value = "empleadorol")
 public class EmpleadoHasRolController {
 
-	@Autowired
-	private EmpleadoHasRolServiceImp repo;
+    @Autowired
+    private EmpleadoHasRolServiceImp repo;
 
-	@GetMapping("/listar")
-	public List<RolHasEmpleado> listarAgencias() {
-		return repo.findAll();
-	}
+    @GetMapping("/listar")
+    public List<RolHasEmpleado> listarAgencias() {
+        return repo.findAll();
+    }
 
-	@GetMapping("/ver/{id}")
-	public RolHasEmpleado verAgencia(@PathVariable RolHasEmpleadoPK id) {
-		return repo.findById(id);
-	}
+    @GetMapping("/ver/{id}")
+    public RolHasEmpleado verAgencia(@PathVariable RolHasEmpleadoPK id) {
+        return repo.findById(id);
+    }
 
-	@GetMapping("/findByEmpleado/{id}")
-	public List<RolHasEmpleado> findByEmpleado(@PathVariable Long id) {
-		return repo.findByEmpleado(id);
-	}
+    @GetMapping("/findByEmpleado/{id}")
+    public List<RolHasEmpleado> findByEmpleado(@PathVariable Long id) {
+        return repo.findByEmpleado(id);
+    }
 
-	@GetMapping("/findByRol/{id}")
-	public List<Empleado> findByRol(@PathVariable Long id) {
-		return repo.findByRol(id);
-	}
+    @GetMapping("/findByRol/{id}")
+    public List<Empleado> findByRol(@PathVariable Long id) {
+        return repo.findByRol(id);
+    }
 
-	@PostMapping("/crear")
-	public RolHasEmpleado crear(@RequestBody RolHasEmpleado entidad) {
-		return repo.save(entidad);
-	}
+    @PostMapping("/crear")
+    public RolHasEmpleado crear(@RequestBody RolHasEmpleado entidad) {
+        return repo.save(entidad);
+    }
 
-	@DeleteMapping("/eliminar/{id}")
-	public void eliminar(@PathVariable RolHasEmpleadoPK id) {
-		repo.delete(id);
-	}
+    @DeleteMapping("/eliminar/{id}")
+    public void eliminar(@PathVariable RolHasEmpleadoPK id) {
+        repo.delete(id);
+    }
 }

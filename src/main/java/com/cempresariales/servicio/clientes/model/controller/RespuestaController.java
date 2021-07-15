@@ -76,6 +76,11 @@ public class RespuestaController {
 		return repo.findByIdEvaluacionIdChecklist(idEvaluacion, idChecklist);
 	}
 
+	@GetMapping("/puntuacionEmpleadoByEvaluacion/{idEvaluacion}/{idEmpleado}")
+	public Double puntuacionEmpleadoByEvaluacion(@PathVariable Long idEvaluacion, @PathVariable Long idEmpleado) {
+		return repo.puntuacionEmpleadoByEvaluacion(idEvaluacion, idEmpleado);
+	}
+
 	@GetMapping("/findByIdEmpresa/{idEmpresa}")
 	public List<Respuesta> findByIdEmpresa(@PathVariable Long idEmpresa) {
 		return repo.findByIdEmpresa(idEmpresa);

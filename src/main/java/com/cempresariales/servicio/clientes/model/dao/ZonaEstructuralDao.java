@@ -11,10 +11,10 @@ import com.cempresariales.servicio.commons.model.entity.ZonaEstructuralHasCiudad
 
 public interface ZonaEstructuralDao extends JpaRepository<ZonaEstructural, Long> {
 	@Query("select zona from ZonaEstructural zona where zona.idZonaEstructural in "
-			+ "(select ze.zonaEstructuralHasCiudadPK.zonaEstructuralIdZonaEstructural from ZonaEstructuralHasCiudad ze where ze.zonaEstructuralHasCiudadPK.zonaEstructuralIdCiudad = ?1)")
+			+ "(select ze.zonaEstructuralIdZonaEstructural.idZonaEstructural from ZonaEstructuralHasCiudad ze where ze.zonaEstructuralIdCiudad.idCiudad = ?1)")
 	public List<ZonaEstructural> findZonaEstructuralByCiudad(@Param("idCiudad") Long id);
 	
-	@Query("select ze from ZonaEstructuralHasCiudad ze where ze.zonaEstructuralHasCiudadPK.zonaEstructuralIdZonaEstructural = ?1")
+	@Query("select ze from ZonaEstructuralHasCiudad ze where ze.zonaEstructuralIdZonaEstructural.idZonaEstructural = ?1")
 	public List<ZonaEstructuralHasCiudad> findZonaEstructuralCiudadByZonaEstructura(@Param("idZonaEstructura") Long id);
 
 }

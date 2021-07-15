@@ -12,42 +12,42 @@ import com.cempresariales.servicio.clientes.model.dao.ZonaEstructuralDao;
 
 
 @Service
-public class ZonaEstructuralServiceImpl implements ZonaEstructuralService{
+public class ZonaEstructuralServiceImpl implements ZonaEstructuralService {
 
-	@Autowired
-	private ZonaEstructuralDao repo;
-	
-	
-	@Override
-	@Transactional(readOnly = true)
-	public List<ZonaEstructural> findAll() {
-		return (List<ZonaEstructural>) repo.findAll();
-	}
+    @Autowired
+    private ZonaEstructuralDao repo;
 
-	@Transactional(readOnly = true)
-	@Override
-	public ZonaEstructural findById(Long id) {
-		return repo.findById(id).orElse(null);
-	}
 
-	@Override
-	public ZonaEstructural save(ZonaEstructural entidad) {
-		return repo.save(entidad);
-	}
+    @Override
+    @Transactional(readOnly = true)
+    public List<ZonaEstructural> findAll() {
+        return (List<ZonaEstructural>) repo.findAll();
+    }
 
-	@Override
-	public void deleteById(Long id) {	
-		repo.deleteById(id);
-	}
+    @Transactional(readOnly = true)
+    @Override
+    public ZonaEstructural findById(Long id) {
+        return repo.findById(id).orElse(null);
+    }
 
-	@Override
-	public List<ZonaEstructural> findZonaEstructuralByCiudad(Long id) {
-		return repo.findZonaEstructuralByCiudad(id);
-	}
+    @Override
+    public ZonaEstructural save(ZonaEstructural entidad) {
+        return repo.save(entidad);
+    }
 
-	@Override
-	public List<ZonaEstructuralHasCiudad> findZonaEstructuralCiudadByZonaEstructura(Long id) {
-		return repo.findZonaEstructuralCiudadByZonaEstructura(id);
-	}
+    @Override
+    public void deleteById(Long id) {
+        repo.deleteById(id);
+    }
+
+    @Override
+    public List<ZonaEstructural> findZonaEstructuralByCiudad(Long id) {
+        return repo.findZonaEstructuralByCiudad(id);
+    }
+
+    @Override
+    public List<ZonaEstructuralHasCiudad> findZonaEstructuralCiudadByZonaEstructura(Long id) {
+        return repo.findZonaEstructuralCiudadByZonaEstructura(id);
+    }
 
 }

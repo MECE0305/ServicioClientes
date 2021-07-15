@@ -18,7 +18,5 @@ public interface IEmpleadoService {
 	public List<Empleado> findByAgenciaIdAgencia(Agencia agencia);
 	
 	public List<Empleado> findEmpleadoByAgencias(Collection<Long> expresion);
-	
-	public List<Empleado> buscarAllEmpleado();
-	
+
 }

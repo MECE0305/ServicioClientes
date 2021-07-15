@@ -33,7 +33,14 @@ public class EmpleadoServiceImp implements IEmpleadoService {
 
 	@Override
 	public Empleado findById(Long id) {
-		return empleadoDao.findById(id).orElse(null);
+		try {
+			Query query = entityManager.createQuery("select emp from Empleado emp where emp.idEmpleado = ?1");
+			query.setParameter(1, id);
+			return (Empleado) query.getSingleResult();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new Empleado();
+		}
 	}
 
 	@Override
@@ -48,7 +55,20 @@ public class EmpleadoServiceImp implements IEmpleadoService {
 
 	@Override
 	public List<Empleado> findByAgenciaIdAgencia(Agencia agencia) {
-		return empleadoDao.findByAgenciaIdAgencia(agencia);
+		try {
+			long id = agencia.getIdAgencia();
+			StringBuilder queryString = new StringBuilder(
+					"select emp from Empleado emp where emp.agenciaIdAgencia.idAgencia in "
+							+ " (select ag.idAgencia from Agencia ag where ag.idAgencia in " + "(" + id + ")"
+							+ ")");
+
+			Query query = entityManager.createQuery(queryString.toString());
+
+			return query.getResultList();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ArrayList<>();
+		}
 	}
 
 	@Override
@@ -69,7 +89,7 @@ public class EmpleadoServiceImp implements IEmpleadoService {
 			}
 
 			StringBuilder queryString = new StringBuilder(
-					"select emp from Empleado emp where emp.agenciaIdAgencia.idAgencia in "
+					"select emp from Empleado emp where emp.agencia.idAgencia in "
 							+ " (select ag.idAgencia from Agencia ag where ag.idAgencia in " + "(" + cadena + ")"
 							+ ")");
 
@@ -80,27 +100,6 @@ public class EmpleadoServiceImp implements IEmpleadoService {
 			e.printStackTrace();
 			return new ArrayList<>();
 		}
-	}
-
-	@Override
-	public List<Empleado> buscarAllEmpleado() {
-		
-		String queryStr =
-			      "select NEW Empleado(emp.idEmpleado, emp.activoEmpleado, emp.apellidoEmpleado, emp.ciEmpleado,"
-			      + "emp.creaEmpleado,emp.fotoEmpleado,emp.generoEmpleado,emp.mailEmpleado,emp.nombreEmpleado,"
-			      + "emp.telefonoEmpleado) from Empleado emp";
-			  TypedQuery<Empleado> query =
-					  entityManager.createQuery(queryStr, Empleado.class);
-			  List<Empleado> results = query.getResultList();
-		
-		/*StringBuilder queryString = new StringBuilder(
-				"select emp.idEmpleado, emp.activoEmpleado, emp.apellidoEmpleado, emp.ciEmpleado,"
-						+ "emp.creaEmpleado,emp.fotoEmpleado,emp.generoEmpleado,emp.mailEmpleado,emp.nombreEmpleado,"
-						+ "emp.telefonoEmpleado from Empleado emp");
-
-		Query query = entityManager.createQuery(queryString.toString());*/
-
-		return results;
 	}
 
 }

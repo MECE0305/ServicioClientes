@@ -22,59 +22,56 @@ import com.cempresariales.servicio.commons.model.entity.Agencia;
 import com.cempresariales.servicio.commons.model.entity.Empleado;
 
 @RestController
-@CrossOrigin(origins = "*", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.OPTIONS })
+@CrossOrigin(origins = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.OPTIONS})
 @RequestMapping(value = "empleado")
 public class EmpleadoController {
 
-	@Autowired
-	private EmpleadoServiceImp empleadoService;
+    @Autowired
+    private EmpleadoServiceImp empleadoService;
 
-	@GetMapping("/listar")
-	public List<Empleado> listarEmpleado() {
-		return empleadoService.findAll();
-	}
-	
-	@GetMapping("/listarAll")
-	public List<Empleado> buscarAllEmpleado() {
-		return empleadoService.buscarAllEmpleado();
-	}
-	
-	
+    @GetMapping("/listar")
+    public List<Empleado> listarEmpleado() {
+        return empleadoService.findAll();
+    }
 
-	@GetMapping("/ver/{id}")
-	public Empleado verItem(@PathVariable Long id) {
-		return empleadoService.findById(id);
-	}
+    @GetMapping("/listarAll")
+    public List<Empleado> buscarAllEmpleado() {
+        return empleadoService.findAll();
+    }
 
-	@PostMapping("/crear")
-	public Empleado crear(@RequestBody Empleado empleado) {
-		return empleadoService.save(empleado);
-	}
+    @GetMapping("/ver/{id}")
+    public Empleado verItem(@PathVariable Long id) {
+        return empleadoService.findById(id);
+    }
 
-	@PutMapping("/editar/{id}")
-	@ResponseStatus(HttpStatus.CREATED)
-	public Empleado editar(@RequestBody Empleado entidad, @PathVariable Long id) {
-		Empleado entidadDb = empleadoService.findById(id);
-		entidadDb = entidad;
-		entidadDb.setIdEmpleado(entidad.getIdEmpleado());
+    @PostMapping("/crear")
+    public Empleado crear(@RequestBody Empleado empleado) {
+        return empleadoService.save(empleado);
+    }
 
-		return empleadoService.save(entidadDb);
-	}
+    @PutMapping("/editar/{id}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Empleado editar(@RequestBody Empleado entidad, @PathVariable Long id) {
+        Empleado entidadDb = empleadoService.findById(id);
+        entidadDb = entidad;
 
-	@PostMapping("/findByAgenciaIdAgencia")
-	@ResponseStatus(HttpStatus.CREATED)
-	public List<Empleado> findByAgenciaIdAgencia(@RequestBody Agencia agencia) {
-		return empleadoService.findByAgenciaIdAgencia(agencia);
-	}
-	
-	@PostMapping("/findEmpleadoByAgencias")
-	@ResponseStatus(HttpStatus.CREATED)
-	public List<Empleado> findEmpleadoByAgencias(@RequestBody Collection<Long> expresion) {
-		return empleadoService.findEmpleadoByAgencias(expresion);
-	}
+        return empleadoService.save(entidadDb);
+    }
 
-	@DeleteMapping("/eliminar/{id}")
-	public void eliminar(@PathVariable Long id) {
-		empleadoService.delete(id);
-	}
+    @PostMapping("/findByAgenciaIdAgencia")
+    @ResponseStatus(HttpStatus.CREATED)
+    public List<Empleado> findByAgenciaIdAgencia(@RequestBody Agencia agencia) {
+        return empleadoService.findByAgenciaIdAgencia(agencia);
+    }
+
+    @PostMapping("/findEmpleadoByAgencias")
+    @ResponseStatus(HttpStatus.CREATED)
+    public List<Empleado> findEmpleadoByAgencias(@RequestBody Collection<Long> expresion) {
+        return empleadoService.findEmpleadoByAgencias(expresion);
+    }
+
+    @DeleteMapping("/eliminar/{id}")
+    public void eliminar(@PathVariable Long id) {
+        empleadoService.delete(id);
+    }
 }

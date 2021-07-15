@@ -38,7 +38,7 @@ public class EmpleadoHasRolServiceImp implements EmpleadoHasRolService {
 
 	@Override
 	public List<RolHasEmpleado> findByEmpleado(Long id) {
-		return repo.findByEmpleado(id);
+		return repo.findByEmp(id);
 	}
 
 	@Override

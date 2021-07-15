@@ -2,6 +2,7 @@ package com.cempresariales.servicio.clientes.model.service;
 
 import java.util.List;
 
+import com.cempresariales.servicio.commons.model.entity.Empleado;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,15 +10,21 @@ import com.cempresariales.servicio.clientes.model.dao.AgenciaDao;
 import com.cempresariales.servicio.commons.model.entity.Agencia;
 import com.cempresariales.servicio.commons.model.entity.Empresa;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+
 @Service
 public class AgenciaServiceImp implements IAgenciaService{
 
 	@Autowired
 	private AgenciaDao agenciaDao;
+	@PersistenceContext
+	private EntityManager entityManager;
 	
 	@Override
 	public List<Agencia> findAll() {	
-		return (List<Agencia>) agenciaDao.findAll();
+		return agenciaDao.findAll();
 	}
 
 	@Override
