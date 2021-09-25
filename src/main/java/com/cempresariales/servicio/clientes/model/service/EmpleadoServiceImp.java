@@ -89,7 +89,7 @@ public class EmpleadoServiceImp implements IEmpleadoService {
 			}
 
 			StringBuilder queryString = new StringBuilder(
-					"select emp from Empleado emp where emp.agencia.idAgencia in "
+					"select emp from Empleado emp where emp.agenciaIdAgencia.idAgencia in "
 							+ " (select ag.idAgencia from Agencia ag where ag.idAgencia in " + "(" + cadena + ")"
 							+ ")");
 

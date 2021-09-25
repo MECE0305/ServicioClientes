@@ -3,6 +3,8 @@ package com.cempresariales.servicio.clientes.model.controller;
 import java.util.Collection;
 import java.util.List;
 
+import com.cempresariales.servicio.clientes.model.dto.AgenciasTopDTO;
+import com.cempresariales.servicio.clientes.model.dto.CategoriaTopDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -67,4 +69,8 @@ public class CategoriaController {
 		return repo.findCategoriasByChecklist(expresion);
 	}
 
+	@GetMapping("/findTop10ByEmpresa/{idEmpresa}/{orderBy}/{limit}")
+	public List<CategoriaTopDTO> findTop10ByEmpresa(@PathVariable Long idEmpresa, @PathVariable String orderBy, @PathVariable int limit) {
+		return repo.findTop10ByEmpresa(idEmpresa, orderBy, limit);
+	}
 }

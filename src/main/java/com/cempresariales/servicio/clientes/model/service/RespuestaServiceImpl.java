@@ -121,7 +121,7 @@ public class RespuestaServiceImpl implements RespuestaService {
 	public Double puntuacionEmpleadoByEvaluacion(Long idEvaluacion, Long idEmpleado) {
 		try {
 
-			String queryStr = "select sum(re.valorCalculadoRespuesta) from Respuesta re where re.cumpleRespuesta = true " +
+			String queryStr = "select sum(re.valorCalculadoRespuesta) from Respuesta re where re.cumpleRespuesta = true and re.noProcede = true " +
 					"and re.checklistHasEvaluacion.evaluacion.idEvaluacion in (" +
 					"select ce.evaluacion.idEvaluacion from ChecklistHasEvaluacion ce where ce.activo = true and ce.evaluacion.idEvaluacion in (" +
 					"select ev.idEvaluacion from Evaluacion ev where ev.activoEvaluacion = true and  ev.idEvaluacion = ?1 and ev.idEmpleado = ?2))";
@@ -130,7 +130,11 @@ public class RespuestaServiceImpl implements RespuestaService {
 			consulta.setParameter(1, idEvaluacion);
 			consulta.setParameter(2, idEmpleado);
 
-			return (Double) consulta.getSingleResult();
+			Double valor = 0.00;
+			valor = (Double) consulta.getSingleResult();
+			if(valor == null)
+				valor = 0.00;
+			return valor;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return 0.00;

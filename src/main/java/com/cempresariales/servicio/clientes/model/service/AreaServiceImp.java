@@ -8,7 +8,11 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
+import com.cempresariales.servicio.clientes.model.dto.AgenciasDTO;
+import com.cempresariales.servicio.clientes.model.dto.AgenciasTopDTO;
+import com.cempresariales.servicio.clientes.model.dto.AreaDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -72,5 +76,68 @@ public class AreaServiceImp implements AreaService {
 			return new ArrayList<>();
 		}
 	}
+
+	@Override
+	public List<AreaDTO> findPromedioPorCategoriaArea(Long idEmpresa, Long idAgencia) {
+
+		try {
+
+			String queryStr = "select new com.cempresariales.servicio.clientes.model.dto.AreaDTO(ag.nombreAgencia, ar.idArea, ar.nombreArea, pond.idCategoria, pond.nombreCategoria, avg (pond.suma), pond.peso)" +
+					" from RolHasEmpleado re JOIN " +
+					" Rol r ON re.rol.idRol = r.idRol JOIN" +
+					" Empleado emp ON re.empleado.idEmpleado = emp.idEmpleado JOIN"+
+					" Evaluacion eva ON emp.idEmpleado = eva.idEmpleado JOIN" +
+					" Agencia ag ON emp.agenciaIdAgencia.idAgencia = ag.idAgencia JOIN" +
+					" Ponderadoporcategoria pond ON eva.idEvaluacion = pond.idEvaluacion JOIN" +
+					" Area ar ON ar.idArea = r.areaIdArea.idArea "+
+					" WHERE ag.empresaIdEmpresa.idEmpresa = ?1  and ag.idAgencia = ?2"+
+					" group by r.nombreRol, pond.nombreCategoria"+
+					" ORDER BY r.nombreRol, pond.nombreCategoria ";
+
+
+			System.out.println("Sentencia : " +queryStr);
+			//   Query query = entityManager.createQuery(queryStr.toString());
+
+			TypedQuery<AreaDTO> query = entityManager.createQuery(queryStr, AreaDTO.class);
+			query.setParameter(1, idEmpresa);
+			query.setParameter(2, idAgencia);
+
+			return query.getResultList();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ArrayList<>();
+		}
+
+	}
+
+	@Override
+	public List<AreaDTO> findPromedioPorAgenciaArea(Long idEmpresa, Long idAgencia) {
+
+		try {
+
+			String queryStr = "select new com.cempresariales.servicio.clientes.model.dto.AreaDTO(ag.nombreAgencia, ar.idArea, ar.nombreArea, ar.idArea, ar.nombreArea, avg (eva.puntajeEvaluacion), avg (eva.puntajeEvaluacion))" +
+					" from Area ar JOIN" +
+					" Rol r ON r.areaIdArea.idArea = ar.idArea JOIN " +
+					" RolHasEmpleado re ON re.rol.idRol = r.idRol JOIN " +
+					"Empleado emp ON re.empleado.idEmpleado = emp.idEmpleado JOIN " +
+					" Agencia ag ON emp.agenciaIdAgencia.idAgencia = ag.idAgencia JOIN" +
+					" Evaluacion eva ON emp.idEmpleado = eva.idEmpleado " +
+					" WHERE ag.empresaIdEmpresa.idEmpresa = ?1  and ag.idAgencia = ?2"+
+					" group by ar.nombreArea"+
+					" ORDER BY ar.nombreArea ";
+
+
+			TypedQuery<AreaDTO> query = entityManager.createQuery(queryStr, AreaDTO.class);
+			query.setParameter(1, idEmpresa);
+			query.setParameter(2, idAgencia);
+
+			return query.getResultList();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ArrayList<>();
+		}
+
+	}
+
 
 }

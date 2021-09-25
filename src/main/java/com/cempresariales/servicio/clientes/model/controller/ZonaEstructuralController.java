@@ -44,6 +44,12 @@ public class ZonaEstructuralController {
 		return repo.findZonaEstructuralCiudadByZonaEstructura(id);
 	}
 
+	@GetMapping("/findZonaEstructuralCiudadByCiudadZonaEstructura/{idCiudad}/{idZona}")
+	public ZonaEstructuralHasCiudad findZonaEstructuralCiudadByCiudadZonaEstructura(@PathVariable Long idCiudad, @PathVariable Long idZona) {
+		return repo.findZonaEstructuralCiudadByCiudadZonaEstructura(idCiudad, idZona);
+	}
+
+
 	@GetMapping("/ver/{id}")
 	public ZonaEstructural verItem(@PathVariable Long id) {
 		return repo.findById(id);

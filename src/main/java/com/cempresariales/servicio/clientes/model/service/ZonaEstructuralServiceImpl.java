@@ -50,4 +50,9 @@ public class ZonaEstructuralServiceImpl implements ZonaEstructuralService {
         return repo.findZonaEstructuralCiudadByZonaEstructura(id);
     }
 
+    @Override
+    public ZonaEstructuralHasCiudad findZonaEstructuralCiudadByCiudadZonaEstructura(Long idCiudad, Long idZona) {
+        return repo.findZonaEstructuralCiudadByCiudadZonaEstructura(idCiudad, idZona);
+    }
+
 }

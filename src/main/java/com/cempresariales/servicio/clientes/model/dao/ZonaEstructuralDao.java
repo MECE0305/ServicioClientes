@@ -17,4 +17,7 @@ public interface ZonaEstructuralDao extends JpaRepository<ZonaEstructural, Long>
 	@Query("select ze from ZonaEstructuralHasCiudad ze where ze.zonaEstructuralIdZonaEstructural.idZonaEstructural = ?1")
 	public List<ZonaEstructuralHasCiudad> findZonaEstructuralCiudadByZonaEstructura(@Param("idZonaEstructura") Long id);
 
+	@Query("select ze from ZonaEstructuralHasCiudad ze where ze.zonaEstructuralIdCiudad.idCiudad = ?1 and ze.zonaEstructuralIdZonaEstructural.idZonaEstructural = ?2")
+	public ZonaEstructuralHasCiudad findZonaEstructuralCiudadByCiudadZonaEstructura(@Param("idCiudad") Long idCiudad,@Param("idZonaEstructura") Long idZona);
+
 }

@@ -14,5 +14,7 @@ public interface ZonaEstructuralService {
 	
 	public List<ZonaEstructural> findZonaEstructuralByCiudad(Long id);
 	public List<ZonaEstructuralHasCiudad> findZonaEstructuralCiudadByZonaEstructura(Long id);
+
+	public ZonaEstructuralHasCiudad findZonaEstructuralCiudadByCiudadZonaEstructura(Long idCiudad, Long idZona);
 	
 }

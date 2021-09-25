@@ -3,6 +3,8 @@ package com.cempresariales.servicio.clientes.model.controller;
 import java.util.Collection;
 import java.util.List;
 
+import com.cempresariales.servicio.clientes.model.dto.AgenciasTopDTO;
+import com.cempresariales.servicio.clientes.model.dto.AreaDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -65,4 +67,15 @@ public class AreaController {
 	public List<Area> findAreasByRoles(@RequestBody Collection<Long> expresion) {
 		return repo.findAreasByRoles(expresion);
 	}
+
+	@GetMapping("/findPromedioPorCategoriaArea/{idEmpresa}/{idAgencia}")
+	public List<AreaDTO> findPromedioPorCategoriaArea(@PathVariable Long idEmpresa,@PathVariable Long idAgencia) {
+		return repo.findPromedioPorCategoriaArea(idEmpresa,idAgencia);
+	}
+
+	@GetMapping("/findPromedioPorAgenciaArea/{idEmpresa}/{idAgencia}")
+	public List<AreaDTO> findPromedioPorAgenciaArea(@PathVariable Long idEmpresa,@PathVariable Long idAgencia) {
+		return repo.findPromedioPorAgenciaArea(idEmpresa,idAgencia);
+	}
+
 }

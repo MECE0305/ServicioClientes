@@ -420,8 +420,8 @@ public class EvaluacionServiceImpl implements EvaluacionService {
                     " join Area a on a.idArea = r.areaIdArea.idArea" +
                     " join Empleado emp on ev.idEmpleado = emp.idEmpleado" +
                     " join Agencia ag on emp.agenciaIdAgencia.idAgencia = ag.idAgencia" +
-                    " join Ciudad c on ag.zonaEstructuralHasCiudadIdZonaCiudad.zonaEstructuralIdCiudad = c.idCiudad" +
-                    " join ZonaEstructuralHasCiudad zec on zec.zonaEstructuralIdCiudad = c.idCiudad" +
+                    " join ZonaEstructuralHasCiudad zec on zec.idZonaCiudad = ag.zonaCiudad.idZonaCiudad " +
+                    " join Ciudad c on ag.zonaCiudad.zonaEstructuralIdCiudad = c.idCiudad" +
                     " join ZonaEstructural ze on ze.idZonaEstructural = zec.zonaEstructuralIdZonaEstructural" +
                     " join Checklist cl on r.idRol = cl.rolIdRol.idRol " +
                     " where ag.idAgencia in " + "(" + cadena + ")";
