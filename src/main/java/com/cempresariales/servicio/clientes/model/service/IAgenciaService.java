@@ -18,8 +18,13 @@ public interface IAgenciaService {
 
 	public List<AgenciasTopDTO> findTop10ByEmpresa(Long idEmpresa, String orderBy, int limit);
 
-	public List<AgenciasDTO> findPromedioPorAgencia(List<Long> IdAgencias, Long idEmpresa);
+	public List<AgenciasDTO> findPromedioAgenciasPorEmpresa(List<Long> IdAgencias, Long idEmpresa);
 
 	public List<AgenciasDTO> findAgenciasPorRol(Long idEmpresa, Long idRol, List<Long> IdAgencias);
 
+	public List<AgenciasDTO> findPromedioPorAgencia(Long idEmpresa);
+
+	public AgenciasDTO findPromedioPorEmpresa(Long idEmpresa);
+
+	public AgenciasDTO findPromedioEmpresaRol(Long idEmpresa);
 }

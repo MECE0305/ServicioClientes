@@ -23,5 +23,14 @@ public interface AreaService {
 
 	public List<AreaDTO> findPromedioPorCategoriaArea(Long idEmpresa, Long idAgencia);
 
+
 	public List<AreaDTO> findPromedioPorAgenciaArea(Long idEmpresa, Long idAgencia);
+
+	public AreaDTO findPromedioPorAgencia(Long idAgencia);
+
+	public List<AreaDTO> findPromedioAreaPorEmpresa(Long idEmpresa);
+
+	public List<AreaDTO> findPromedioPorCategoriaAreaEmpresa(Long idEmpresa);
+
+	public AreaDTO findPromedioPorCategoriaEmpresa(Long idEmpresa);
 }

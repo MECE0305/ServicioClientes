@@ -10,6 +10,8 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
+import com.cempresariales.servicio.clientes.model.dto.AgenciasDTO;
+import com.cempresariales.servicio.clientes.model.dto.TiempoAtencionDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -100,6 +102,29 @@ public class EmpleadoServiceImp implements IEmpleadoService {
 			e.printStackTrace();
 			return new ArrayList<>();
 		}
+	}
+
+	@Override
+	public List<TiempoAtencionDTO> findEmpleadoAreaTAtencion(Long idAgencia) {
+		try {
+
+
+			String queryStr = "select new com.cempresariales.servicio.clientes.model.dto.TiempoAtencionDTO(t.idEmpleado, t.nombreEmpleado, t.idArea, t.nombreArea , t.atencion, t.espera, t.permanencia)" +
+					" FROM  TiempoAtencionView t" +
+					" WHERE t.idAgencia = ?1 " +
+					" ORDER BY t.nombreArea ";
+
+
+			TypedQuery<TiempoAtencionDTO> query = entityManager.createQuery(queryStr, TiempoAtencionDTO.class);
+
+			query.setParameter(1, idAgencia);
+
+			return query.getResultList();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ArrayList<TiempoAtencionDTO>();
+		}
+
 	}
 
 }

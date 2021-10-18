@@ -20,15 +20,6 @@ public class AreaDTO implements Serializable {
     public AreaDTO() {
     }
 
-    public AreaDTO(String nombreAgencia, Long idRol, String nombreRol, Long idCategoria, String nombreCategoria, Double promedio, Double peso) {
-        this.nombreAgencia = nombreAgencia;
-        this.idRol = idRol;
-        this.nombreRol = nombreRol;
-        this.idCategoria = idCategoria;
-        this.nombreCategoria = nombreCategoria;
-        this.promedio = promedio;
-        this.peso = peso;
-    }
 
     public String getNombreAgencia() {
         return nombreAgencia;
@@ -83,6 +74,16 @@ public class AreaDTO implements Serializable {
     }
 
     public void setPeso(Double peso) {
+        this.peso = peso;
+    }
+
+    public AreaDTO(String nombreAgencia, Long idRol, String nombreRol, Long idCategoria, String nombreCategoria, Double promedio, Double peso) {
+        this.nombreAgencia = nombreAgencia;
+        this.idRol = idRol;
+        this.nombreRol = nombreRol;
+        this.idCategoria = idCategoria;
+        this.nombreCategoria = nombreCategoria;
+        this.promedio = promedio;
         this.peso = peso;
     }
 }

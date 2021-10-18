@@ -19,4 +19,5 @@ public interface CategoriaService {
 	public List<CategoriaTopDTO> findTop10ByEmpresa(Long idEmpresa, String orderBy, int limit);
 
 
+
 }

@@ -3,6 +3,8 @@ package com.cempresariales.servicio.clientes.model.controller;
 import java.util.Collection;
 import java.util.List;
 
+import com.cempresariales.servicio.clientes.model.dto.AgenciasDTO;
+import com.cempresariales.servicio.clientes.model.dto.TiempoAtencionDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -74,4 +76,11 @@ public class EmpleadoController {
     public void eliminar(@PathVariable Long id) {
         empleadoService.delete(id);
     }
+
+    @GetMapping("/findEmpleadoAreaTAtencion/{idAgencia}")
+    public List<TiempoAtencionDTO> findEmpleadoAreaTAtencion(@PathVariable Long idAgencia) {
+        return empleadoService.findEmpleadoAreaTAtencion(idAgencia);
+    }
+
+
 }

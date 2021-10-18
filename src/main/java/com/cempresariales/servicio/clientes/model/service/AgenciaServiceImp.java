@@ -86,18 +86,19 @@ public class AgenciaServiceImp implements IAgenciaService {
             return new ArrayList<AgenciasTopDTO>();
         }
     }
+
     @Override
-    public List<AgenciasDTO> findPromedioPorAgencia(List<Long> IdAgencias, Long idEmpresa) {
+    public List<AgenciasDTO> findPromedioAgenciasPorEmpresa(List<Long> IdAgencias, Long idEmpresa) {
         try {
 
-            String queryStr = "select new com.cempresariales.servicio.clientes.model.dto.AgenciasDTO(ag.idAgencia, ag.nombreAgencia, avg(eva.puntajeEvaluacion), ag.ceoAgencia)" +
+            String queryStr = "select new com.cempresariales.servicio.clientes.model.dto.AgenciasDTO(ag.idAgencia, ag.nombreAgencia, ROUND(avg(eva.puntajeEvaluacion),2), ag.ceoAgencia)" +
                     " from Agencia ag " +
                     " join Empleado emp on emp.agenciaIdAgencia.idAgencia = ag.idAgencia" +
                     " join Evaluacion eva on emp.idEmpleado = eva.idEmpleado" +
                     " where ag.idAgencia in :cadena and ag.empresaIdEmpresa.idEmpresa = ?1" +
                     " group by ag.nombreAgencia ";
-            System.out.println("Sentencia : " +queryStr);
-         //   Query query = entityManager.createQuery(queryStr.toString());
+            System.out.println("Sentencia : " + queryStr);
+            //   Query query = entityManager.createQuery(queryStr.toString());
 
             TypedQuery<AgenciasDTO> query = entityManager.createQuery(queryStr, AgenciasDTO.class).setMaxResults(10);
             query.setParameter("cadena", IdAgencias);
@@ -116,10 +117,10 @@ public class AgenciaServiceImp implements IAgenciaService {
     public List<AgenciasDTO> findAgenciasPorRol(Long idEmpresa, Long idRol, List<Long> IdAgencias) {
         try {
 
-            String queryStr = "select new com.cempresariales.servicio.clientes.model.dto.AgenciasDTO(ag.idAgencia, ag.nombreAgencia,  avg(ev.puntajeEvaluacion), r.nombreRol)"+
+            String queryStr = "select new com.cempresariales.servicio.clientes.model.dto.AgenciasDTO(ag.idAgencia, ag.nombreAgencia,  avg(ev.puntajeEvaluacion), r.nombreRol)" +
                     " from Empleado emp INNER JOIN" +
-                    " Agencia ag ON emp.agenciaIdAgencia.idAgencia = ag.idAgencia INNER JOIN"+
-                    " RolHasEmpleado re ON emp.idEmpleado = re.rolHasEmpleadoPK.empleadoIdEmpleado INNER JOIN"+
+                    " Agencia ag ON emp.agenciaIdAgencia.idAgencia = ag.idAgencia INNER JOIN" +
+                    " RolHasEmpleado re ON emp.idEmpleado = re.rolHasEmpleadoPK.empleadoIdEmpleado INNER JOIN" +
                     " Rol r ON re.rolHasEmpleadoPK.rolIdRol = r.idRol INNER JOIN" +
                     " Evaluacion ev ON emp.idEmpleado = ev.idEmpleado" +
                     " WHERE  ag.empresaIdEmpresa.idEmpresa = ?1 and r.idRol = ?2 and ag.idAgencia in :cadena " +
@@ -138,5 +139,73 @@ public class AgenciaServiceImp implements IAgenciaService {
         }
     }
 
+    @Override
+    public AgenciasDTO findPromedioEmpresaRol(Long idEmpresa) {
+
+        String queryStr = "select new com.cempresariales.servicio.clientes.model.dto.AgenciasDTO(emp.idEmpresa, emp.nombreEmpresa, ROUND(avg(ev.puntajeEvaluacion),2) , r.nombreRol)" +
+                " from Agencia ag INNER JOIN " +
+                " Empleado e ON ag.idAgencia = e.agenciaIdAgencia.idAgencia INNER JOIN " +
+                " Empresa emp ON ag.empresaIdEmpresa.idEmpresa = emp.idEmpresa INNER JOIN " +
+                " RolHasEmpleado re ON e.idEmpleado = re.rolHasEmpleadoPK.empleadoIdEmpleado INNER JOIN " +
+                " Rol r ON re.rolHasEmpleadoPK.rolIdRol = r.idRol INNER JOIN" +
+                " Evaluacion ev ON e.idEmpleado = ev.idEmpleado" +
+                " WHERE  emp.idEmpresa = ?1";
+
+
+        TypedQuery<AgenciasDTO> query = entityManager.createQuery(queryStr, AgenciasDTO.class);
+
+        query.setParameter(1, idEmpresa);
+
+        return query.getSingleResult();
+
+    }
+
+
+    @Override
+    public List<AgenciasDTO> findPromedioPorAgencia(Long idAgencia) {
+        try {
+
+            String queryStr = "select new com.cempresariales.servicio.clientes.model.dto.AgenciasDTO(ag.idAgencia, ag.nombreAgencia, avg(eva.puntajeEvaluacion), ag.ceoAgencia)" +
+                    " from Agencia ag " +
+                    " join Empleado emp on emp.agenciaIdAgencia.idAgencia = ag.idAgencia" +
+                    " join Evaluacion eva on emp.idEmpleado = eva.idEmpleado" +
+                    " where ag.idAgencia = ?1";
+
+            TypedQuery<AgenciasDTO> query = entityManager.createQuery(queryStr, AgenciasDTO.class).setMaxResults(10);
+
+            query.setParameter(1, idAgencia);
+
+            return query.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+
+
+    }
+
+    public AgenciasDTO findPromedioPorEmpresa(Long idEmpresa) {
+        try {
+
+            String queryStr = "select new com.cempresariales.servicio.clientes.model.dto.AgenciasDTO(e.idEmpresa, e.nombreEmpresa, ROUND(avg(ev.puntajeEvaluacion),2), ag.ceoAgencia)" +
+                    " FROM  Agencia ag INNER JOIN " +
+                    " Empleado emp ON ag.idAgencia = emp.agenciaIdAgencia.idAgencia INNER JOIN " +
+                    " Evaluacion ev ON ev.idEmpleado = emp.idEmpleado INNER JOIN " +
+                    " Empresa e ON e.idEmpresa = ag.empresaIdEmpresa.idEmpresa " +
+                    " where e.idEmpresa = ?1";
+
+
+            TypedQuery<AgenciasDTO> query = entityManager.createQuery(queryStr, AgenciasDTO.class);
+
+            query.setParameter(1, idEmpresa);
+
+            return query.getSingleResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new AgenciasDTO();
+        }
+
+
+    }
 
 }

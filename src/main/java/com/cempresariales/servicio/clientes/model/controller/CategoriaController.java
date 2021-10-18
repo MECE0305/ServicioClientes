@@ -73,4 +73,5 @@ public class CategoriaController {
 	public List<CategoriaTopDTO> findTop10ByEmpresa(@PathVariable Long idEmpresa, @PathVariable String orderBy, @PathVariable int limit) {
 		return repo.findTop10ByEmpresa(idEmpresa, orderBy, limit);
 	}
+
 }

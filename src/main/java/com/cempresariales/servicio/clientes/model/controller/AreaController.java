@@ -78,4 +78,25 @@ public class AreaController {
 		return repo.findPromedioPorAgenciaArea(idEmpresa,idAgencia);
 	}
 
+	@GetMapping("/findPromedioPorAgencia/{idAgencia}")
+	public AreaDTO findPromedioPorAgencia(@PathVariable Long idAgencia) {
+		return repo.findPromedioPorAgencia(idAgencia);
+	}
+
+	@GetMapping("/findPromedioAreaPorEmpresa/{idEmpresa}")
+	public List<AreaDTO> findPromedioAreaPorEmpresa(@PathVariable Long idEmpresa) {
+		return repo.findPromedioAreaPorEmpresa(idEmpresa);
+	}
+
+	@GetMapping("/findPromedioPorCategoriaAreaEmpresa/{idEmpresa}")
+	public List<AreaDTO> findPromedioPorCategoriaAreaEmpresa(@PathVariable Long idEmpresa) {
+		return repo.findPromedioPorCategoriaAreaEmpresa(idEmpresa);
+	}
+
+	@GetMapping("/findPromedioPorCategoriaEmpresa/{idEmpresa}")
+	public AreaDTO findPromedioPorCategoriaEmpresa(@PathVariable Long idEmpresa) {
+		return repo.findPromedioPorCategoriaEmpresa(idEmpresa);
+	}
+
+
 }

@@ -75,10 +75,10 @@ public class AgenciaController {
 	}
 
 
-	@PostMapping("/findPromedioPorAgencia/{idEmpresa}")
+	@PostMapping("/findPromedioAgenciasPorEmpresa/{idEmpresa}")
 	@ResponseStatus(HttpStatus.CREATED)
-	public List<AgenciasDTO> findPromedioPorAgencia(@RequestBody List<Long> expresion,@PathVariable Long idEmpresa) {
-		return agenciaService.findPromedioPorAgencia(expresion, idEmpresa);
+	public List<AgenciasDTO> findPromedioAgenciasPorEmpresa(@RequestBody List<Long> expresion,@PathVariable Long idEmpresa) {
+		return agenciaService.findPromedioAgenciasPorEmpresa(expresion, idEmpresa);
 	}
 
 	@PostMapping("/findAgenciasPorRol/{idEmpresa}/{idRol}")
@@ -86,5 +86,18 @@ public class AgenciaController {
 	public List<AgenciasDTO> findAgenciasPorRol(@RequestBody List<Long> expresion,@PathVariable Long idEmpresa, @PathVariable Long idRol) {
 		return agenciaService.findAgenciasPorRol(idEmpresa, idRol,expresion);
 	}
-	
+
+	@GetMapping("/findPromedioEmpresaRol/{idEmpresa}")
+	public AgenciasDTO findPromedioEmpresaRol(@PathVariable Long idEmpresa) {
+		return agenciaService.findPromedioEmpresaRol(idEmpresa);
+	}
+
+	@GetMapping("/findPromedioPorAgencia/{idAgencia}")
+	public List<AgenciasDTO> findPromedioPorAgencia(@PathVariable Long idAgencia) {
+		return agenciaService.findPromedioPorAgencia(idAgencia);
+	}
+	@GetMapping("/findPromedioPorEmpresa/{idEmpresa}")
+	public AgenciasDTO findPromedioPorEmpresa(@PathVariable Long idEmpresa) {
+		return agenciaService.findPromedioPorEmpresa(idEmpresa);
+	}
 }
