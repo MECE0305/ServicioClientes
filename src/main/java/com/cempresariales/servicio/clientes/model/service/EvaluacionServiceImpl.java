@@ -190,6 +190,40 @@ public class EvaluacionServiceImpl implements EvaluacionService {
         }
     }
 
+
+    @Override
+    public List<Evaluacion> findEvaByAgenciasDTO(Long idUsuario,Long idEmpresa,String agencias) {
+
+        try {
+
+            StringBuilder queryString = new StringBuilder(
+                    "SELECT e.idEvaluacion, emp.nombreEmpleado, rl.nombreRol , round(sum(r.valorCalculadoRespuesta),2)," +
+                            " (select rd.nombreRango " +
+                            " from RangoDesempenio rd " +
+                            " where round(sum(r.valorCalculadoRespuesta),2) between rd.minimoRango and rd.maximoRango and rd.empresa.idEmpresa = ?1 )" +
+                            " from Respuesta r" +
+                            " inner join Evaluacion e on r.checklistHasEvaluacion.checklistHasEvaluacionPK.evaluacionIdEvaluacion = e.idEvaluacion" +
+                            " inner join EstadoEvaluacion ee on ee.idEstado=e.estadoEvaluacionIdEstado.idEstado" +
+                            " inner join Empleado emp on e.idEmpleado = emp.idEmpleado" +
+                            " inner join RolHasEmpleado re on re.rolHasEmpleadoPK.empleadoIdEmpleado = emp.idEmpleado" +
+                            " inner join Rol rl on rl.idRol = re.rolHasEmpleadoPK.rolIdRol" +
+                            " where r.cumpleRespuesta = true and r.noProcede = true" +
+                            " and emp.agenciaIdAgencia.idAgencia in " + "(" + agencias + ")"+
+                            " and r.checklistHasEvaluacion.checklistHasEvaluacionPK.evaluacionIdEvaluacion in (" +
+                            " select ce.checklistHasEvaluacionPK.evaluacionIdEvaluacion from ChecklistHasEvaluacion ce where ce.activo = true and ce.checklistHasEvaluacionPK.evaluacionIdEvaluacion in (" +
+                            " select e.idEvaluacion from Evaluacion e where e.activoEvaluacion = true)) group by e.idEvaluacion,emp.nombreEmpleado, rl.nombreRol");
+
+            queryString.append(" ORDER BY eva.creaEvaluacion desc");
+
+            Query query = entityManager.createQuery();
+
+            return query.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+    }
+
     @Override
     @Transactional(readOnly = true)
     public List<Evaluacion> findAll() {

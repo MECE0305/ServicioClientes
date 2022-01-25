@@ -100,4 +100,12 @@ public class AgenciaController {
 	public AgenciasDTO findPromedioPorEmpresa(@PathVariable Long idEmpresa) {
 		return agenciaService.findPromedioPorEmpresa(idEmpresa);
 	}
+
+	//metodo post con body para registrar agencias
+	//el metodo debe tener 2 parametros uno string y otro entero
+	//el metodo debe devolver una listade agencias
+
+
+
+
 }

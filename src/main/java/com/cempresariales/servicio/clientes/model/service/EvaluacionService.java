@@ -30,4 +30,6 @@ public interface EvaluacionService {
 	public String reporteBloquesbyAgencias(Collection<Long> IdAgencias);
 	public List<DetalleReporteBloquesDTO> detalleBloquesbyAgencias(Long idChecklist, Long idEvaluacion);
 
-}
+	public List<Evaluacion> findEvaByAgenciasDTO(Long idUsuario,Long idEmpresa,String agencias);
+
+	}
