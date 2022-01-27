@@ -10,16 +10,13 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
-import com.cempresariales.servicio.clientes.model.dto.DetalleReporteBloquesDTO;
-import com.cempresariales.servicio.clientes.model.dto.EncabezadoReporteBloquesDTO;
-import com.cempresariales.servicio.clientes.model.dto.ReporteBloquesDTO;
+import com.cempresariales.servicio.clientes.model.dto.*;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.cempresariales.servicio.commons.model.entity.Evaluacion;
-import com.cempresariales.servicio.clientes.model.dto.BuscadorDTO;
 import com.cempresariales.servicio.clientes.model.dao.EvaluacionDao;
 
 @Service
@@ -192,32 +189,36 @@ public class EvaluacionServiceImpl implements EvaluacionService {
 
 
     @Override
-    public List<Evaluacion> findEvaByAgenciasDTO(Long idUsuario,Long idEmpresa,String agencias) {
+    public List<MedicionDTO> findEvaByAgenciasDTO(Long idEmpresa, String agencias) {
 
         try {
 
-            StringBuilder queryString = new StringBuilder(
-                    "SELECT e.idEvaluacion, emp.nombreEmpleado, rl.nombreRol , round(sum(r.valorCalculadoRespuesta),2)," +
-                            " (select rd.nombreRango " +
-                            " from RangoDesempenio rd " +
-                            " where round(sum(r.valorCalculadoRespuesta),2) between rd.minimoRango and rd.maximoRango and rd.empresa.idEmpresa = ?1 )" +
-                            " from Respuesta r" +
-                            " inner join Evaluacion e on r.checklistHasEvaluacion.checklistHasEvaluacionPK.evaluacionIdEvaluacion = e.idEvaluacion" +
-                            " inner join EstadoEvaluacion ee on ee.idEstado=e.estadoEvaluacionIdEstado.idEstado" +
-                            " inner join Empleado emp on e.idEmpleado = emp.idEmpleado" +
-                            " inner join RolHasEmpleado re on re.rolHasEmpleadoPK.empleadoIdEmpleado = emp.idEmpleado" +
-                            " inner join Rol rl on rl.idRol = re.rolHasEmpleadoPK.rolIdRol" +
-                            " where r.cumpleRespuesta = true and r.noProcede = true" +
-                            " and emp.agenciaIdAgencia.idAgencia in " + "(" + agencias + ")"+
-                            " and r.checklistHasEvaluacion.checklistHasEvaluacionPK.evaluacionIdEvaluacion in (" +
-                            " select ce.checklistHasEvaluacionPK.evaluacionIdEvaluacion from ChecklistHasEvaluacion ce where ce.activo = true and ce.checklistHasEvaluacionPK.evaluacionIdEvaluacion in (" +
-                            " select e.idEvaluacion from Evaluacion e where e.activoEvaluacion = true)) group by e.idEvaluacion,emp.nombreEmpleado, rl.nombreRol");
+            StringBuilder queryString = new StringBuilder("select new com.cempresariales.servicio.clientes.model.dto.MedicionDTO(e.idEvaluacion,ee.idEstado, ep.nombreEmpresa, ag.nombreAgencia, emp.nombreEmpleado, rl.nombreRol,rd.nombreRango, rd.colorRango, e.observacionEvaluacion, e.puntajeEvaluacion, e.horaInicioEvaluacion, e.horaFinEvaluacion,e.atencionEvaluacion, e.contactoEvaluacion, e.esperaEvaluacion) " +
+                    " from RangoDesempenio rd" +
+                    " join Empresa ep on ep.idEmpresa = rd.empresa.idEmpresa" +
+                    " join Agencia ag on ag.empresaIdEmpresa.idEmpresa = ep.idEmpresa" +
+                    " join Empleado emp on emp.agenciaIdAgencia.idAgencia = ag.idAgencia" +
+                    " join RolHasEmpleado re on re.rolHasEmpleadoPK.empleadoIdEmpleado = emp.idEmpleado" +
+                    " join Rol rl on rl.idRol = re.rolHasEmpleadoPK.rolIdRol" +
+                    " join Evaluacion e on e.idEmpleado = emp.idEmpleado" +
+                    " join EstadoEvaluacion ee on ee.idEstado = e.estadoEvaluacionIdEstado.idEstado" +
+                    " where e.puntajeEvaluacion between rd.minimoRango and rd.maximoRango" +
+                    " and ag.idAgencia in " + "(" + agencias + ") ");
 
-            queryString.append(" ORDER BY eva.creaEvaluacion desc");
 
-            Query query = entityManager.createQuery();
+            if(idEmpresa == 0)
+                queryString.append(" and ep.idEmpresa > 0");
+            else queryString.append(" and ep.idEmpresa == "+idEmpresa);
 
-            return query.getResultList();
+            queryString.append(" group by e.idEvaluacion,ee.idEstado, ep.nombreEmpresa, ag.nombreAgencia, emp.nombreEmpleado, rl.nombreRol,rd.nombreRango, rd.colorRango, e.observacionEvaluacion, e.puntajeEvaluacion, e.horaInicioEvaluacion, e.horaFinEvaluacion,e.atencionEvaluacion, e.contactoEvaluacion, e.esperaEvaluacion" +
+                    " order by emp.nombreEmpleado ");
+
+            System.out.println("queryString: " + queryString.toString());
+
+            TypedQuery<MedicionDTO> consulta =
+                    entityManager.createQuery(queryString.toString(), MedicionDTO.class);
+            List<MedicionDTO> results = consulta.getResultList();
+            return results;
         } catch (Exception e) {
             e.printStackTrace();
             return new ArrayList<>();

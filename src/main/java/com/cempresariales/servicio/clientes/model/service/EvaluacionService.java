@@ -3,11 +3,8 @@ package com.cempresariales.servicio.clientes.model.service;
 import java.util.Collection;
 import java.util.List;
 
-import com.cempresariales.servicio.clientes.model.dto.DetalleReporteBloquesDTO;
-import com.cempresariales.servicio.clientes.model.dto.EncabezadoReporteBloquesDTO;
-import com.cempresariales.servicio.clientes.model.dto.ReporteBloquesDTO;
+import com.cempresariales.servicio.clientes.model.dto.*;
 import com.cempresariales.servicio.commons.model.entity.Evaluacion;
-import com.cempresariales.servicio.clientes.model.dto.BuscadorDTO;
 
 
 public interface EvaluacionService {
@@ -30,6 +27,6 @@ public interface EvaluacionService {
 	public String reporteBloquesbyAgencias(Collection<Long> IdAgencias);
 	public List<DetalleReporteBloquesDTO> detalleBloquesbyAgencias(Long idChecklist, Long idEvaluacion);
 
-	public List<Evaluacion> findEvaByAgenciasDTO(Long idUsuario,Long idEmpresa,String agencias);
+	public List<MedicionDTO> findEvaByAgenciasDTO(Long idEmpresa, String agencias);
 
 	}

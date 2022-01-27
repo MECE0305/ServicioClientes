@@ -3,9 +3,7 @@ package com.cempresariales.servicio.clientes.model.controller;
 import java.util.Collection;
 import java.util.List;
 
-import com.cempresariales.servicio.clientes.model.dto.DetalleReporteBloquesDTO;
-import com.cempresariales.servicio.clientes.model.dto.EncabezadoReporteBloquesDTO;
-import com.cempresariales.servicio.clientes.model.dto.ReporteBloquesDTO;
+import com.cempresariales.servicio.clientes.model.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -21,7 +19,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cempresariales.servicio.commons.model.entity.Evaluacion;
-import com.cempresariales.servicio.clientes.model.dto.BuscadorDTO;
 import com.cempresariales.servicio.clientes.model.service.EvaluacionServiceImpl;
 
 @RestController
@@ -103,6 +100,11 @@ public class EvaluacionController {
     @GetMapping("/detalleBloques/{idChecklist}/{idEvaluacion}")
     public List<DetalleReporteBloquesDTO> detalleBloquesbyAgencias(@PathVariable Long idChecklist, @PathVariable Long idEvaluacion) {
         return repo.detalleBloquesbyAgencias(idChecklist, idEvaluacion);
+    }
+
+    @GetMapping("/findEvaByAgenciasDTO/{idEmpresa}/{agencias}")
+    public List<MedicionDTO> findEvaByAgenciasDTO(@PathVariable Long idEmpresa, @PathVariable String agencias) {
+        return repo.findEvaByAgenciasDTO(idEmpresa, agencias);
     }
 
 }
