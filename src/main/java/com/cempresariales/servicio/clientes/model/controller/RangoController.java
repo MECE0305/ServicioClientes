@@ -2,6 +2,8 @@ package com.cempresariales.servicio.clientes.model.controller;
 
 import java.util.List;
 
+import com.cempresariales.servicio.clientes.model.dto.MedicionDTO;
+import com.cempresariales.servicio.clientes.model.dto.RangoDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -68,4 +70,10 @@ public class RangoController {
 	public void eliminar(@PathVariable Long id) {
 		service.deleteById(id);
 	}
+
+	@GetMapping("/findRangoByAgenciasDTO/{idEmpresa}/{agencias}/{estado}")
+	public List<RangoDTO> findRangoByAgenciasDTO(@PathVariable Long idEmpresa, @PathVariable String agencias, @PathVariable Long estado) {
+		return service.findRangoByAgenciasDTO(idEmpresa, agencias, estado);
+	}
+
 }

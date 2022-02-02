@@ -10,7 +10,9 @@ public class MedicionDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Long idEvaluacion,idEstado;
-    private String nombreEmpresa , nombreAgencia,nombreEmpleado, nombreRol,nombreRango,colorRango, observacionEvaluacion;
+    private String nombreEmpresa , nombreAgencia,nombreEmpleado, nombreRol,nombreRango,colorRango,
+            observacionEvaluacion,imagenEmpresa, fotoEmpleado, emailAgencia, telefonoAgencia, direccionAgencia;
+    private boolean activoAgencia;
     private Float puntajeEvaluacion;
     private Date horaInicioEvaluacion,horaFinEvaluacion,atencionEvaluacion,contactoEvaluacion, esperaEvaluacion;
 
@@ -21,7 +23,8 @@ public class MedicionDTO implements Serializable {
     public MedicionDTO(Long idEvaluacion, Long idEstado, String nombreEmpresa, String nombreAgencia, String nombreEmpleado,
                        String nombreRol, String nombreRango, String colorRango, String observacionEvaluacion,
                        Float puntajeEvaluacion, Date horaInicioEvaluacion, Date horaFinEvaluacion, Date atencionEvaluacion,
-                       Date contactoEvaluacion, Date esperaEvaluacion) {
+                       Date contactoEvaluacion, Date esperaEvaluacion, String imagenEmpresa, String fotoEmpleado,
+                       String emailAgencia, String telefonoAgencia, boolean activoAgencia, String direccionAgencia) {
         super();
         this.idEvaluacion = idEvaluacion;
         this.idEstado = idEstado;
@@ -38,6 +41,60 @@ public class MedicionDTO implements Serializable {
         this.atencionEvaluacion = atencionEvaluacion;
         this.contactoEvaluacion = contactoEvaluacion;
         this.esperaEvaluacion = esperaEvaluacion;
+        this.imagenEmpresa = imagenEmpresa;
+        this.fotoEmpleado = fotoEmpleado;
+        this.emailAgencia = emailAgencia;
+        this.telefonoAgencia = telefonoAgencia;
+        this.activoAgencia = activoAgencia;
+        this.direccionAgencia = direccionAgencia;
+    }
+
+    public String getDireccionAgencia() {
+        return direccionAgencia;
+    }
+
+    public void setDireccionAgencia(String direccionAgencia) {
+        this.direccionAgencia = direccionAgencia;
+    }
+
+    public String getEmailAgencia() {
+        return emailAgencia;
+    }
+
+    public void setEmailAgencia(String emailAgencia) {
+        this.emailAgencia = emailAgencia;
+    }
+
+    public String getTelefonoAgencia() {
+        return telefonoAgencia;
+    }
+
+    public void setTelefonoAgencia(String telefonoAgencia) {
+        this.telefonoAgencia = telefonoAgencia;
+    }
+
+    public boolean isActivoAgencia() {
+        return activoAgencia;
+    }
+
+    public void setActivoAgencia(boolean activoAgencia) {
+        this.activoAgencia = activoAgencia;
+    }
+
+    public String getImagenEmpresa() {
+        return imagenEmpresa;
+    }
+
+    public void setImagenEmpresa(String imagenEmpresa) {
+        this.imagenEmpresa = imagenEmpresa;
+    }
+
+    public String getFotoEmpleado() {
+        return fotoEmpleado;
+    }
+
+    public void setFotoEmpleado(String fotoEmpleado) {
+        this.fotoEmpleado = fotoEmpleado;
     }
 
     public Long getIdEvaluacion() {
