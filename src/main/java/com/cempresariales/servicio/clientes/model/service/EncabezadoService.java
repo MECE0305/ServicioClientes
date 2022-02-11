@@ -10,4 +10,5 @@ public interface EncabezadoService {
 	public Encabezado findById(Long id);
 	public Encabezado save(Encabezado entidad);
 	public void delete(Long id);
+	public List<Encabezado> findEncByEmpresa(Long id);
 }

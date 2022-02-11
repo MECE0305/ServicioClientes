@@ -14,4 +14,10 @@ public interface AgenciaDao extends JpaRepository<Agencia, Long>{
 	
 	List<Agencia> findByEmpresaIdEmpresa(Empresa empresaIdEmpresa);
 
+
+	@Query("select ag from Agencia ag INNER JOIN " +
+			" ZonaEstructuralHasCiudad zhc ON ag.zonaCiudad.idZonaCiudad = zhc.idZonaCiudad" +
+			" where zhc.zonaEstructuralIdZonaEstructural.idZonaEstructural = ?1 group by ag.idAgencia")
+	List<Agencia> findByZonaEstructural(Long idZonaEs);
+
 }

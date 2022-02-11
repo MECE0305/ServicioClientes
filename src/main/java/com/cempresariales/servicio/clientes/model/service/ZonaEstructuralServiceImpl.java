@@ -55,4 +55,15 @@ public class ZonaEstructuralServiceImpl implements ZonaEstructuralService {
         return repo.findZonaEstructuralCiudadByCiudadZonaEstructura(idCiudad, idZona);
     }
 
+    @Override
+    public List<ZonaEstructural> findZonaEstructuralByRol(Long idRol) {
+        return repo.findZonaEstructuralByRol(idRol);
+    }
+
+    @Override
+    public List<ZonaEstructural> findZonaEstructuralByEmpresa(Long idEmpresa) {
+        return repo.findZonaEstructuralByEmpresa(idEmpresa);
+    }
+
+
 }

@@ -113,6 +113,8 @@ public class AgenciaServiceImp implements IAgenciaService {
 
     }
 
+
+
     @Override
     public List<AgenciasDTO> findAgenciasPorRol(Long idEmpresa, Long idRol, List<Long> IdAgencias) {
         try {
@@ -130,6 +132,36 @@ public class AgenciaServiceImp implements IAgenciaService {
             TypedQuery<AgenciasDTO> query = entityManager.createQuery(queryStr, AgenciasDTO.class).setMaxResults(10);
             query.setParameter(1, idEmpresa);
             query.setParameter(2, idRol);
+            query.setParameter("cadena", IdAgencias);
+
+            return query.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+    }
+
+    @Override
+    public List<AgenciasDTO> findAgenciasPorRolZonaEncabezado(Long idEmpresa, Long idRol, List<Long> IdAgencias, Long idEncabezado, Long idzonaEs) {
+        try {
+
+
+            String queryStr = "select new com.cempresariales.servicio.clientes.model.dto.AgenciasDTO(ag.idAgencia, ag.nombreAgencia, ROUND(avg(ev.puntajeEvaluacion),2) as promedio, r.nombreRol)" +
+                    " from Agencia ag INNER JOIN " +
+                    " Empleado e ON ag.idAgencia = e.agenciaIdAgencia.idAgencia INNER JOIN " +
+                    " RolHasEmpleado re ON e.idEmpleado = re.rolHasEmpleadoPK.empleadoIdEmpleado INNER JOIN " +
+                    " Rol r ON re.rolHasEmpleadoPK.rolIdRol = r.idRol INNER JOIN" +
+                    " Evaluacion ev ON e.idEmpleado = ev.idEmpleado INNER JOIN " +
+                    " EvaluacionHasEncabezado ehe ON ehe.evaluacionHasEncabezadoPK.evaluacionIdEvaluacion = ev.idEvaluacion " +
+                    " WHERE  ag.empresaIdEmpresa.idEmpresa = ?1 and ag.idZonaEstructural = ?2 and ehe.evaluacionHasEncabezadoPK.encabezadoIdEncabezado = ?3 and r.idRol = ?4 and ag.idAgencia in :cadena"+
+                    " group by ag.idAgencia order by promedio";
+
+
+            TypedQuery<AgenciasDTO> query = entityManager.createQuery(queryStr, AgenciasDTO.class).setMaxResults(10);
+            query.setParameter(1, idEmpresa);
+            query.setParameter(2, idzonaEs);
+            query.setParameter(3, idEncabezado);
+            query.setParameter(4, idRol);
             query.setParameter("cadena", IdAgencias);
 
             return query.getResultList();
@@ -158,6 +190,11 @@ public class AgenciaServiceImp implements IAgenciaService {
 
         return query.getSingleResult();
 
+    }
+
+    @Override
+    public List<Agencia> findByZonaEstructural(Long idZonaEst) {
+        return agenciaDao.findByZonaEstructural(idZonaEst);
     }
 
 
@@ -207,5 +244,33 @@ public class AgenciaServiceImp implements IAgenciaService {
 
 
     }
+
+    @Override
+    public List<AgenciasDTO> findPromedioPorEmpresaZonaEnca(List<Long> IdAgencias, Long idEmpresa, Long idEncabezado, Long idZonaEs) {
+        try {
+
+            String queryStr = "select new com.cempresariales.servicio.clientes.model.dto.AgenciasDTO(ag.idAgencia, ag.nombreAgencia, ROUND(avg(eva.puntajeEvaluacion),2) as promedio, ag.ceoAgencia)" +
+                    " from Agencia ag " +
+                    " join Empleado emp on emp.agenciaIdAgencia.idAgencia = ag.idAgencia" +
+                    " join Evaluacion eva on emp.idEmpleado = eva.idEmpleado " +
+                    " join EvaluacionHasEncabezado ehe on ehe.evaluacionHasEncabezadoPK.evaluacionIdEvaluacion = eva.idEvaluacion " +
+                    " where ag.idAgencia in :cadena and ag.empresaIdEmpresa.idEmpresa = ?1 and ehe.evaluacionHasEncabezadoPK.encabezadoIdEncabezado = ?2 and ag.idZonaEstructural = ?3 " +
+                    " group by ag.idAgencia order by promedio desc";
+
+
+
+            TypedQuery<AgenciasDTO> query = entityManager.createQuery(queryStr, AgenciasDTO.class).setMaxResults(10);
+            query.setParameter("cadena", IdAgencias);
+            query.setParameter(1, idEmpresa);
+            query.setParameter(2, idEncabezado);
+            query.setParameter(3, idZonaEs);
+
+            return query.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+    }
+
 
 }

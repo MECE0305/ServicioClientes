@@ -12,4 +12,8 @@ public interface RolDao extends JpaRepository<Rol, Long> {
 
 	@Query("select r from Rol r where r.areaIdArea.idArea = ?1 ")
 	public List<Rol> findRolByArea(@Param("idArea") Long idArea);
+
+
+
+
 }

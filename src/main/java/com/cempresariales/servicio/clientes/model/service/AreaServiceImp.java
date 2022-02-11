@@ -138,6 +138,70 @@ public class AreaServiceImp implements AreaService {
 	}
 
 	@Override
+	public List<AreaDTO> findPromedioPorCategoriaAreaZonaAgencia(Long idEmpresa, Long idAgencia, Long idEncabezado, Long idZona, Long idArea) {
+		List<AreaDTO> resultado = new ArrayList<>();
+		List<AreaDTO> resultadoTemp = new ArrayList<>();
+
+		try {
+
+
+
+			String queryEmpArea = "select new com.cempresariales.servicio.clientes.model.dto.AreaDTO(ag.nombreAgencia, ar.idArea, ar.nombreArea, r.idRol, r.nombreRol, COALESCE(round(avg (eva.puntajeEvaluacion),2),0.0), avg (eva.puntajeEvaluacion))" +
+					" from Area ar JOIN" +
+					" Rol r ON r.areaIdArea.idArea = ar.idArea JOIN " +
+					" RolHasEmpleado re ON re.rol.idRol = r.idRol JOIN " +
+					"Empleado emp ON re.empleado.idEmpleado = emp.idEmpleado JOIN " +
+					" Agencia ag ON emp.agenciaIdAgencia.idAgencia = ag.idAgencia JOIN" +
+					" Evaluacion eva ON emp.idEmpleado = eva.idEmpleado " +
+					" WHERE ag.empresaIdEmpresa.idEmpresa = ?1 and ag.idAgencia = ?2"+
+					" group by ar.nombreArea"+
+					" ORDER BY ar.nombreArea ";
+
+
+			TypedQuery<AreaDTO> typedAG = entityManager.createQuery(queryEmpArea, AreaDTO.class);
+			typedAG.setParameter(1, idEmpresa);
+			typedAG.setParameter(2, idAgencia);
+
+			resultadoTemp.addAll(typedAG.getResultList());
+
+			for (AreaDTO area: resultadoTemp) {
+				AreaDTO areaDTO =  new AreaDTO("",area.getIdCategoria(), area.getNombreCategoria(), area.getIdCategoria(),"TOTALES" ,area.getPromedio(),area.getPeso());
+				resultado.add(areaDTO);
+			}
+
+
+			String queryStr = "select new com.cempresariales.servicio.clientes.model.dto.AreaDTO(ag.nombreAgencia, ar.idArea, ar.nombreArea, pond.idCategoria, pond.nombreCategoria, COALESCE(round(avg (((pond.suma * 100) / pond.peso)),2), 0.0) , pond.peso)" +
+					" from RolHasEmpleado re JOIN " +
+					" Rol r ON re.rol.idRol = r.idRol JOIN" +
+					" Empleado emp ON re.empleado.idEmpleado = emp.idEmpleado JOIN"+
+					" Evaluacion eva ON emp.idEmpleado = eva.idEmpleado JOIN" +
+					" EvaluacionHasEncabezado ehe ON ehe.evaluacionHasEncabezadoPK.evaluacionIdEvaluacion = eva.idEvaluacion JOIN " +
+					" Agencia ag ON emp.agenciaIdAgencia.idAgencia = ag.idAgencia JOIN" +
+					" Ponderadoporcategoria pond ON eva.idEvaluacion = pond.idEvaluacion JOIN" +
+					" Area ar ON ar.idArea = r.areaIdArea.idArea "+
+					" WHERE ag.empresaIdEmpresa.idEmpresa = ?1  and ag.idAgencia = ?2 and ar.idArea = ?3 and ag.idZonaEstructural = ?4 and ehe.evaluacionHasEncabezadoPK.encabezadoIdEncabezado = ?5  "+
+					" group by r.nombreRol, pond.nombreCategoria"+
+					" ORDER BY r.nombreRol, pond.nombreCategoria ";
+
+
+			TypedQuery<AreaDTO> query = entityManager.createQuery(queryStr, AreaDTO.class);
+			query.setParameter(1, idEmpresa);
+			query.setParameter(2, idAgencia);
+			query.setParameter(3, idArea);
+			query.setParameter(4, idZona);
+			query.setParameter(5, idEncabezado);
+
+			resultado.addAll(query.getResultList());
+
+			return resultado;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ArrayList<>();
+		}
+	}
+
+
+	@Override
 	public List<AreaDTO> findPromedioPorCategoriaAreaEmpresa(Long idEmpresa) {
 		List<AreaDTO> resultado = new ArrayList<>();
 		List<AreaDTO> resultadoTemp = new ArrayList<>();
@@ -230,27 +294,38 @@ public class AreaServiceImp implements AreaService {
 
 	}
 
+	@Override
+	public List<Area> findByEmpresa(Long idEmpresa) {
+		return rolDao.findAreaByEmpresa(idEmpresa);
+	}
 
 	@Override
-	public List<AreaDTO> findPromedioPorAgenciaArea(Long idEmpresa, Long idAgencia) {
+	public List<AreaDTO> findPromedioPorAgenciaZonarol(Long idRol, Long idZona, Long idAgencia) {
+		return null;
+	}
 
+
+	@Override
+	public List<AreaDTO> findPromedioPorAgenciaArea(Long idEmpresa, Long idAgencia, Long idRol, Long idZonaE, Long idEncabezado) {
 		try {
 
-			String queryStr = "select new com.cempresariales.servicio.clientes.model.dto.AreaDTO(ag.nombreAgencia, ar.idArea, ar.nombreArea, ar.idArea, ar.nombreArea, round(avg (eva.puntajeEvaluacion),2), avg (eva.puntajeEvaluacion))" +
-					" from Area ar JOIN" +
-					" Rol r ON r.areaIdArea.idArea = ar.idArea JOIN " +
+			String queryStr = "select new com.cempresariales.servicio.clientes.model.dto.AreaDTO(ag.nombreAgencia, r.idRol, r.nombreRol, r.idRol, r.nombreRol, round(avg (eva.puntajeEvaluacion),2), avg (eva.puntajeEvaluacion))" +
+					" from Rol r JOIN " +
 					" RolHasEmpleado re ON re.rol.idRol = r.idRol JOIN " +
 					"Empleado emp ON re.empleado.idEmpleado = emp.idEmpleado JOIN " +
 					" Agencia ag ON emp.agenciaIdAgencia.idAgencia = ag.idAgencia JOIN" +
-					" Evaluacion eva ON emp.idEmpleado = eva.idEmpleado " +
-					" WHERE ag.empresaIdEmpresa.idEmpresa = ?1  and ag.idAgencia = ?2"+
-					" group by ar.nombreArea"+
-					" ORDER BY ar.nombreArea ";
+					" Evaluacion eva ON emp.idEmpleado = eva.idEmpleado JOIN" +
+					" EvaluacionHasEncabezado ehe ON ehe.evaluacionHasEncabezadoPK.evaluacionIdEvaluacion = eva.idEvaluacion " +
+					" WHERE ag.empresaIdEmpresa.idEmpresa = ?1  and ag.idAgencia = ?2 and r.idRol = ?3 and ag.idZonaEstructural = ?4 and ehe.evaluacionHasEncabezadoPK.encabezadoIdEncabezado = ?5 ";
+
 
 
 			TypedQuery<AreaDTO> query = entityManager.createQuery(queryStr, AreaDTO.class);
 			query.setParameter(1, idEmpresa);
 			query.setParameter(2, idAgencia);
+			query.setParameter(3, idRol);
+			query.setParameter(4, idZonaE);
+			query.setParameter(5, idEncabezado);
 
 			return query.getResultList();
 		} catch (Exception e) {
@@ -316,6 +391,36 @@ public class AreaServiceImp implements AreaService {
 			return new AreaDTO();
 		}
 
+	}
+
+	@Override
+	public AreaDTO findPromedioPorAgenciaAreaZonaEnca(Long idAgencia, Long idArea, Long idZonaE, Long idEncabezado) {
+		try {
+
+			String queryStr = "select new com.cempresariales.servicio.clientes.model.dto.AreaDTO(ar.nombreArea, ar.idArea, ag.nombreAgencia, ar.idArea, ar.nombreArea, avg (eva.puntajeEvaluacion), avg (eva.puntajeEvaluacion))" +
+					" from Area ar JOIN" +
+					" Rol r ON r.areaIdArea.idArea = ar.idArea JOIN " +
+					" RolHasEmpleado re ON re.rol.idRol = r.idRol JOIN " +
+					"Empleado emp ON re.empleado.idEmpleado = emp.idEmpleado JOIN " +
+					" Agencia ag ON emp.agenciaIdAgencia.idAgencia = ag.idAgencia JOIN" +
+					" Evaluacion eva ON emp.idEmpleado = eva.idEmpleado JOIN" +
+					" EvaluacionHasEncabezado ehe ON ehe.evaluacionHasEncabezadoPK.evaluacionIdEvaluacion = eva.idEvaluacion " +
+					" WHERE ag.idAgencia = ?1 and ar.idArea = ?2 and ag.idZonaEstructural = ?3 and ehe.evaluacionHasEncabezadoPK.encabezadoIdEncabezado = ?4 "+
+					" ORDER BY ar.nombreArea ";
+
+
+			TypedQuery<AreaDTO> query = entityManager.createQuery(queryStr, AreaDTO.class);
+			query.setParameter(1, idAgencia);
+			query.setParameter(2, idArea);
+			query.setParameter(3, idZonaE);
+			query.setParameter(4, idEncabezado);
+
+
+			return query.getSingleResult();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new AreaDTO();
+		}
 	}
 
 }

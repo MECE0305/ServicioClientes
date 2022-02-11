@@ -27,85 +27,102 @@ import com.cempresariales.servicio.commons.model.entity.Empresa;
 
 
 @RestController
-@CrossOrigin(origins = "*", methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT,
-		RequestMethod.OPTIONS })
+@CrossOrigin(origins = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT,
+        RequestMethod.OPTIONS})
 @RequestMapping(value = "agencia")
 public class AgenciaController {
 
-	@Autowired
-	private AgenciaServiceImp agenciaService;
+    @Autowired
+    private AgenciaServiceImp agenciaService;
 
-	@GetMapping("/listar")
-	public List<Agencia> listarAgencias() {
-		return agenciaService.findAll();
-	}
+    @GetMapping("/listar")
+    public List<Agencia> listarAgencias() {
+        return agenciaService.findAll();
+    }
 
-	@GetMapping("/ver/{id}")
-	public Agencia verAgencia(@PathVariable Long id) {
-		return agenciaService.findById(id);
-	}
+    @GetMapping("/ver/{id}")
+    public Agencia verAgencia(@PathVariable Long id) {
+        return agenciaService.findById(id);
+    }
 
-	@PostMapping("/crear")
-	public Agencia crear(@RequestBody Agencia agencia) {
-		return agenciaService.save(agencia);
-	}
+    @PostMapping("/crear")
+    public Agencia crear(@RequestBody Agencia agencia) {
+        return agenciaService.save(agencia);
+    }
 
-	@PostMapping("/findByEmpresaIdEmpresa")
-	public List<Agencia> findByEmpresaIdEmpresa(@RequestBody Empresa empresa) {
-		return agenciaService.findByEmpresaIdEmpresa(empresa);
-	}
+    @PostMapping("/findByEmpresaIdEmpresa")
+    public List<Agencia> findByEmpresaIdEmpresa(@RequestBody Empresa empresa) {
+        return agenciaService.findByEmpresaIdEmpresa(empresa);
+    }
 
-	@PutMapping("/editar/{id}")
-	@ResponseStatus(HttpStatus.CREATED)
-	public Agencia editar(@RequestBody Agencia entidad, @PathVariable Long id) {
-		Agencia agenciaDb = agenciaService.findById(id);
-		agenciaDb = entidad;
+    @PutMapping("/editar/{id}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Agencia editar(@RequestBody Agencia entidad, @PathVariable Long id) {
+        Agencia agenciaDb = agenciaService.findById(id);
+        agenciaDb = entidad;
 
-		return agenciaService.save(agenciaDb);
-	}
+        return agenciaService.save(agenciaDb);
+    }
 
-	@DeleteMapping("/eliminarAgencia/{id}")
-	public void eliminar(@PathVariable Long id) {
-		agenciaService.delete(id);
-	}
+    @DeleteMapping("/eliminarAgencia/{id}")
+    public void eliminar(@PathVariable Long id) {
+        agenciaService.delete(id);
+    }
 
-	@GetMapping("/findTop10ByEmpresa/{idEmpresa}/{orderBy}/{limit}")
-	public List<AgenciasTopDTO> findTop10ByEmpresa(@PathVariable Long idEmpresa, @PathVariable String orderBy, @PathVariable int limit) {
-		return agenciaService.findTop10ByEmpresa(idEmpresa, orderBy, limit);
-	}
-
-
-	@PostMapping("/findPromedioAgenciasPorEmpresa/{idEmpresa}")
-	@ResponseStatus(HttpStatus.CREATED)
-	public List<AgenciasDTO> findPromedioAgenciasPorEmpresa(@RequestBody List<Long> expresion,@PathVariable Long idEmpresa) {
-		return agenciaService.findPromedioAgenciasPorEmpresa(expresion, idEmpresa);
-	}
-
-	@PostMapping("/findAgenciasPorRol/{idEmpresa}/{idRol}")
-	@ResponseStatus(HttpStatus.CREATED)
-	public List<AgenciasDTO> findAgenciasPorRol(@RequestBody List<Long> expresion,@PathVariable Long idEmpresa, @PathVariable Long idRol) {
-		return agenciaService.findAgenciasPorRol(idEmpresa, idRol,expresion);
-	}
-
-	@GetMapping("/findPromedioEmpresaRol/{idEmpresa}")
-	public AgenciasDTO findPromedioEmpresaRol(@PathVariable Long idEmpresa) {
-		return agenciaService.findPromedioEmpresaRol(idEmpresa);
-	}
-
-	@GetMapping("/findPromedioPorAgencia/{idAgencia}")
-	public List<AgenciasDTO> findPromedioPorAgencia(@PathVariable Long idAgencia) {
-		return agenciaService.findPromedioPorAgencia(idAgencia);
-	}
-	@GetMapping("/findPromedioPorEmpresa/{idEmpresa}")
-	public AgenciasDTO findPromedioPorEmpresa(@PathVariable Long idEmpresa) {
-		return agenciaService.findPromedioPorEmpresa(idEmpresa);
-	}
-
-	//metodo post con body para registrar agencias
-	//el metodo debe tener 2 parametros uno string y otro entero
-	//el metodo debe devolver una listade agencias
+    @GetMapping("/findTop10ByEmpresa/{idEmpresa}/{orderBy}/{limit}")
+    public List<AgenciasTopDTO> findTop10ByEmpresa(@PathVariable Long idEmpresa, @PathVariable String orderBy, @PathVariable int limit) {
+        return agenciaService.findTop10ByEmpresa(idEmpresa, orderBy, limit);
+    }
 
 
+    @PostMapping("/findPromedioAgenciasPorEmpresa/{idEmpresa}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public List<AgenciasDTO> findPromedioAgenciasPorEmpresa(@RequestBody List<Long> expresion, @PathVariable Long idEmpresa) {
+        return agenciaService.findPromedioAgenciasPorEmpresa(expresion, idEmpresa);
+    }
+
+    @PostMapping("/findAgenciasPorRol/{idEmpresa}/{idRol}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public List<AgenciasDTO> findAgenciasPorRol(@RequestBody List<Long> expresion, @PathVariable Long idEmpresa, @PathVariable Long idRol) {
+        return agenciaService.findAgenciasPorRol(idEmpresa, idRol, expresion);
+    }
+
+    @GetMapping("/findPromedioEmpresaRol/{idEmpresa}")
+    public AgenciasDTO findPromedioEmpresaRol(@PathVariable Long idEmpresa) {
+        return agenciaService.findPromedioEmpresaRol(idEmpresa);
+    }
+
+    @PostMapping("/findPromedioEmpresaRolZonaEnc/{idEmpresa}/{idRol}/{idEncabezado}/{idZonaEstr}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public List<AgenciasDTO> findPromedioEmpresaRolZonaEnc(@RequestBody List<Long> expresion, @PathVariable Long idEmpresa, @PathVariable Long idRol, @PathVariable Long idEncabezado, @PathVariable Long idZonaEstr) {
+        return agenciaService.findAgenciasPorRolZonaEncabezado(idEmpresa, idRol, expresion, idEncabezado, idZonaEstr);
+    }
+
+    @GetMapping("/findPromedioPorAgencia/{idAgencia}")
+    public List<AgenciasDTO> findPromedioPorAgencia(@PathVariable Long idAgencia) {
+        return agenciaService.findPromedioPorAgencia(idAgencia);
+    }
+
+    @GetMapping("/findPromedioPorEmpresa/{idEmpresa}")
+    public AgenciasDTO findPromedioPorEmpresa(@PathVariable Long idEmpresa) {
+        return agenciaService.findPromedioPorEmpresa(idEmpresa);
+    }
+
+    @PostMapping("/findPromedioPorEmpresaZonaEnca/{idEmpresa}/{idEncabezado}/{idZonaEs}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public List<AgenciasDTO> findPromedioPorEmpresaZonaEnca(@RequestBody List<Long> expresion, @PathVariable Long idEmpresa, @PathVariable Long idEncabezado, @PathVariable Long idZonaEs) {
+        return agenciaService.findPromedioPorEmpresaZonaEnca(expresion, idEmpresa, idEncabezado, idZonaEs);
+    }
+
+    //metodo post con body para registrar agencias
+    //el metodo debe tener 2 parametros uno string y otro entero
+    //el metodo debe devolver una listade agencias
+
+
+    @GetMapping("/findByZonaEstructural/{id}")
+    public List<Agencia> findByZonaEstructural(@PathVariable Long id) {
+        return agenciaService.findByZonaEstructural(id);
+    }
 
 
 }

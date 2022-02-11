@@ -69,18 +69,30 @@ public class AreaController {
 	}
 
 	@GetMapping("/findPromedioPorCategoriaArea/{idEmpresa}/{idAgencia}")
-	public List<AreaDTO> findPromedioPorCategoriaArea(@PathVariable Long idEmpresa,@PathVariable Long idAgencia) {
+	public List<AreaDTO> findPromedioPorCategoriaArea(@PathVariable Long idEmpresa,@PathVariable Long idAgencia,@PathVariable Long idEncabezado,@PathVariable Long idZona,@PathVariable Long idArea) {
 		return repo.findPromedioPorCategoriaArea(idEmpresa,idAgencia);
 	}
 
-	@GetMapping("/findPromedioPorAgenciaArea/{idEmpresa}/{idAgencia}")
-	public List<AreaDTO> findPromedioPorAgenciaArea(@PathVariable Long idEmpresa,@PathVariable Long idAgencia) {
-		return repo.findPromedioPorAgenciaArea(idEmpresa,idAgencia);
+	@GetMapping("/findPromedioPorCategoriaAreaZonaAgencia/{idEmpresa}/{idAgencia}/{idEncabezado}/{idZona}/{idArea}")
+	public List<AreaDTO> findPromedioPorCategoriaAreaZonaAgencia(@PathVariable Long idEmpresa,@PathVariable Long idAgencia,@PathVariable Long idEncabezado,@PathVariable Long idZona,@PathVariable Long idArea) {
+		return repo.findPromedioPorCategoriaAreaZonaAgencia(idEmpresa,idAgencia,idEncabezado,idZona,idArea);
+	}
+
+
+
+	@GetMapping("/findPromedioPorAgenciaArea/{idEmpresa}/{idAgencia}/{idRol}/{idZonaE}/{idEncabezado}")
+	public List<AreaDTO> findPromedioPorAgenciaArea(@PathVariable Long idEmpresa,@PathVariable Long idAgencia,@PathVariable Long idRol,@PathVariable Long idZonaE,@PathVariable Long idEncabezado) {
+		return repo.findPromedioPorAgenciaArea(idEmpresa,idAgencia,idRol,idZonaE, idEncabezado);
 	}
 
 	@GetMapping("/findPromedioPorAgencia/{idAgencia}")
 	public AreaDTO findPromedioPorAgencia(@PathVariable Long idAgencia) {
 		return repo.findPromedioPorAgencia(idAgencia);
+	}
+
+	@GetMapping("/findPromedioPorAgenciaAreaZonaEnc/{idAgencia}/{idArea}/{idZonaE}/{idEncabezado}")
+	public AreaDTO findPromedioPorAgenciaAreaZonaEnc(@PathVariable Long idAgencia,@PathVariable Long idArea,@PathVariable Long idZonaE,@PathVariable Long idEncabezado) {
+		return repo.findPromedioPorAgenciaAreaZonaEnca(idAgencia,idArea,idZonaE,idEncabezado);
 	}
 
 	@GetMapping("/findPromedioAreaPorEmpresa/{idEmpresa}")
@@ -98,5 +110,9 @@ public class AreaController {
 		return repo.findPromedioPorCategoriaEmpresa(idEmpresa);
 	}
 
+	@GetMapping("/findAreaPorEmpresa/{idEmpresa}")
+	public List<Area> findAreaPorEmpresa(@PathVariable Long idEmpresa) {
+		return repo.findByEmpresa(idEmpresa);
+	}
 
 }
