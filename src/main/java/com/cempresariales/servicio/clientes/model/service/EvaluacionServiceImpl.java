@@ -193,7 +193,7 @@ public class EvaluacionServiceImpl implements EvaluacionService {
 
         try {
 
-            StringBuilder queryString = new StringBuilder("select new com.cempresariales.servicio.clientes.model.dto.MedicionDTO(e.idEvaluacion,ee.idEstado, ep.nombreEmpresa, ag.nombreAgencia, emp.nombreEmpleado, rl.nombreRol,rd.nombreRango, rd.colorRango, e.observacionEvaluacion, e.puntajeEvaluacion, e.horaInicioEvaluacion, e.horaFinEvaluacion,e.atencionEvaluacion, e.contactoEvaluacion, e.esperaEvaluacion, ep.imagenEmpresa, emp.fotoEmpleado, ag.emailAgencia, ag.telefonoAgencia, ag.activoAgencia, ag.direccionAgencia ) " +
+            StringBuilder queryString = new StringBuilder("select new com.cempresariales.servicio.clientes.model.dto.MedicionDTO(ep.idEmpresa, ag.idAgencia, emp.idEmpleado,e.idEvaluacion,ee.idEstado, ep.nombreEmpresa, ag.nombreAgencia, emp.nombreEmpleado, rl.nombreRol,rd.nombreRango, rd.colorRango, e.observacionEvaluacion, round(e.puntajeEvaluacion,2), e.horaInicioEvaluacion, e.horaFinEvaluacion,e.atencionEvaluacion, e.contactoEvaluacion, e.esperaEvaluacion, ep.imagenEmpresa, emp.fotoEmpleado, ag.emailAgencia, ag.telefonoAgencia, ag.activoAgencia, ag.direccionAgencia ) " +
                     " from RangoDesempenio rd" +
                     " join Empresa ep on ep.idEmpresa = rd.empresa.idEmpresa" +
                     " join Agencia ag on ag.empresaIdEmpresa.idEmpresa = ep.idEmpresa" +
@@ -214,7 +214,7 @@ public class EvaluacionServiceImpl implements EvaluacionService {
 
 
 
-            queryString.append(" group by e.idEvaluacion,ee.idEstado, ep.nombreEmpresa, ag.nombreAgencia, emp.nombreEmpleado, rl.nombreRol,rd.nombreRango, rd.colorRango, e.observacionEvaluacion, e.puntajeEvaluacion, e.horaInicioEvaluacion, e.horaFinEvaluacion,e.atencionEvaluacion, e.contactoEvaluacion, e.esperaEvaluacion, ep.imagenEmpresa, emp.fotoEmpleado, ag.emailAgencia, ag.telefonoAgencia, ag.activoAgencia, ag.direccionAgencia" +
+            queryString.append(" group by ep.idEmpresa, ag.idAgencia, emp.idEmpleado,e.idEvaluacion,ee.idEstado, ep.nombreEmpresa, ag.nombreAgencia, emp.nombreEmpleado, rl.nombreRol,rd.nombreRango, rd.colorRango, e.observacionEvaluacion, e.puntajeEvaluacion, e.horaInicioEvaluacion, e.horaFinEvaluacion,e.atencionEvaluacion, e.contactoEvaluacion, e.esperaEvaluacion, ep.imagenEmpresa, emp.fotoEmpleado, ag.emailAgencia, ag.telefonoAgencia, ag.activoAgencia, ag.direccionAgencia" +
                     " order by emp.nombreEmpleado ");
 
             System.out.println("queryString: " + queryString.toString());

@@ -9,7 +9,7 @@ public class MedicionDTO implements Serializable {
      */
     private static final long serialVersionUID = 1L;
 
-    private Long idEvaluacion,idEstado;
+    private Long idEvaluacion,idEstado,idEmpresa, idAgencia, idEmpleado;
     private String nombreEmpresa , nombreAgencia,nombreEmpleado, nombreRol,nombreRango,colorRango,
             observacionEvaluacion,imagenEmpresa, fotoEmpleado, emailAgencia, telefonoAgencia, direccionAgencia;
     private boolean activoAgencia;
@@ -20,7 +20,7 @@ public class MedicionDTO implements Serializable {
         super();
     }
 
-    public MedicionDTO(Long idEvaluacion, Long idEstado, String nombreEmpresa, String nombreAgencia, String nombreEmpleado,
+    public MedicionDTO(Long idEmpresa,Long idAgencia,Long idEmpleado,Long idEvaluacion, Long idEstado, String nombreEmpresa, String nombreAgencia, String nombreEmpleado,
                        String nombreRol, String nombreRango, String colorRango, String observacionEvaluacion,
                        Float puntajeEvaluacion, Date horaInicioEvaluacion, Date horaFinEvaluacion, Date atencionEvaluacion,
                        Date contactoEvaluacion, Date esperaEvaluacion, String imagenEmpresa, String fotoEmpleado,
@@ -47,6 +47,34 @@ public class MedicionDTO implements Serializable {
         this.telefonoAgencia = telefonoAgencia;
         this.activoAgencia = activoAgencia;
         this.direccionAgencia = direccionAgencia;
+        this.idEmpresa = idEmpresa;
+        this.idAgencia = idAgencia;
+        this.idEmpleado = idEmpleado;
+    }
+
+
+    public Long getIdEmpresa() {
+        return idEmpresa;
+    }
+
+    public void setIdEmpresa(Long idEmpresa) {
+        this.idEmpresa = idEmpresa;
+    }
+
+    public Long getIdAgencia() {
+        return idAgencia;
+    }
+
+    public void setIdAgencia(Long idAgencia) {
+        this.idAgencia = idAgencia;
+    }
+
+    public Long getIdEmpleado() {
+        return idEmpleado;
+    }
+
+    public void setIdEmpleado(Long idEmpleado) {
+        this.idEmpleado = idEmpleado;
     }
 
     public String getDireccionAgencia() {
