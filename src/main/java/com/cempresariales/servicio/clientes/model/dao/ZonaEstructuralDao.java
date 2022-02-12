@@ -20,4 +20,20 @@ public interface ZonaEstructuralDao extends JpaRepository<ZonaEstructural, Long>
 	@Query("select ze from ZonaEstructuralHasCiudad ze where ze.zonaEstructuralIdCiudad.idCiudad = ?1 and ze.zonaEstructuralIdZonaEstructural.idZonaEstructural = ?2")
 	public ZonaEstructuralHasCiudad findZonaEstructuralCiudadByCiudadZonaEstructura(@Param("idCiudad") Long idCiudad,@Param("idZonaEstructura") Long idZona);
 
+
+	@Query("select ze from ZonaEstructural ze INNER JOIN " +
+			" Agencia ag ON ag.idZonaEstructural = ze.idZonaEstructural INNER JOIN " +
+			" Empleado emp ON emp.agenciaIdAgencia.idAgencia = ag.idAgencia INNER JOIN " +
+			" RolHasEmpleado rhe ON rhe.rolHasEmpleadoPK.empleadoIdEmpleado = emp.idEmpleado " +
+			" where rhe.rol.idRol = ?1 group by ze.idZonaEstructural")
+	public List<ZonaEstructural> findZonaEstructuralByRol(@Param("idRol") Long idRol);
+
+
+	@Query("select ze from ZonaEstructural ze INNER JOIN " +
+			" Agencia ag ON ag.idZonaEstructural = ze.idZonaEstructural " +
+			" where ag.empresaIdEmpresa.idEmpresa = ?1 group by ze.idZonaEstructural")
+	public List<ZonaEstructural> findZonaEstructuralByEmpresa(@Param("idEmpresa") Long idEmpresa);
+
+
+
 }

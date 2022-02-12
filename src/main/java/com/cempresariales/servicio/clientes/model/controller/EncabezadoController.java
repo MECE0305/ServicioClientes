@@ -57,4 +57,11 @@ public class EncabezadoController {
 	public void eliminar(@PathVariable Long id) {
 		repo.delete(id);
 	}
+
+	@GetMapping("/findEncByEmpresa/{id}")
+	public List<Encabezado> findEncByEmpresa(@PathVariable Long id) {
+		return repo.findEncByEmpresa(id);
+	}
+
+
 }

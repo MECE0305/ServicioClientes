@@ -22,9 +22,17 @@ public interface IAgenciaService {
 
 	public List<AgenciasDTO> findAgenciasPorRol(Long idEmpresa, Long idRol, List<Long> IdAgencias);
 
+	public List<AgenciasDTO> findAgenciasPorRolZonaEncabezado(Long idEmpresa, Long idRol, List<Long> IdAgencias, Long idEncabezado, Long idzonaEs);
+
 	public List<AgenciasDTO> findPromedioPorAgencia(Long idEmpresa);
 
 	public AgenciasDTO findPromedioPorEmpresa(Long idEmpresa);
 
+	public List<AgenciasDTO> findPromedioPorEmpresaZonaEnca(List<Long> IdAgencias,Long idEmpresa, Long idEncabezado, Long idZonaEs);
+
 	public AgenciasDTO findPromedioEmpresaRol(Long idEmpresa);
+
+	public List<Agencia> findByZonaEstructural(Long idZonaEst);
+
+
 }

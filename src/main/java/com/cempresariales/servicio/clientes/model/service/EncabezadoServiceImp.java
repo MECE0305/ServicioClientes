@@ -34,4 +34,9 @@ public class EncabezadoServiceImp implements EncabezadoService {
 		repo.deleteById(id);
 	}
 
+	@Override
+	public List<Encabezado> findEncByEmpresa(Long id) {
+		return repo.listaEncabezadoPorEmpresa(id);
+	}
+
 }

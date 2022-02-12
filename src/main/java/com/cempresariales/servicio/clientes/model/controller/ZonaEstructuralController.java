@@ -79,4 +79,14 @@ public class ZonaEstructuralController {
 		repo.deleteById(id);
 	}
 
+	@GetMapping("/findZonaEstructuralByRol/{id}")
+	public List<ZonaEstructural> findZonaEstructuralByRol(@PathVariable Long id) {
+		return repo.findZonaEstructuralByRol(id);
+	}
+
+	@GetMapping("/findZonaEstructuralByEmpresa/{id}")
+	public List<ZonaEstructural> findZonaEstructuralByEmpresa(@PathVariable Long id) {
+		return repo.findZonaEstructuralByEmpresa(id);
+	}
+
 }
