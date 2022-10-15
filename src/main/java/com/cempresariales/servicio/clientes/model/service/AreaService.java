@@ -24,7 +24,7 @@ public interface AreaService {
 	public List<AreaDTO> findPromedioPorCategoriaArea(Long idEmpresa, Long idAgencia);
 	public List<AreaDTO> findPromedioPorCategoriaAreaZonaAgencia(Long idEmpresa, Long idAgencia,Long idEncabezado, Long idZona, Long idArea);
 
-	public List<AreaDTO> findPromedioPorAgenciaArea(Long idEmpresa, Long idAgencia, Long idRol, Long idZonaE, Long idEncabezado);
+	public List<AreaDTO> findPromedioPorAgenciaArea(Long idEmpresa, Long idAgencia, Long idRol, Long idZonaE, Long idEncabezado, Integer groupBy);
 
 	public AreaDTO findPromedioPorAgencia(Long idAgencia);
 	public AreaDTO findPromedioPorAgenciaAreaZonaEnca(Long idAgencia, Long idArea, Long idZonaE, Long idEncabezado);

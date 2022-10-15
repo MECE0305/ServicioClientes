@@ -11,6 +11,9 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import com.cempresariales.servicio.clientes.model.dto.*;
+import com.cempresariales.servicio.commons.model.entity.ChecklistHasEvaluacion;
+import com.cempresariales.servicio.commons.model.entity.ChecklistHasEvaluacionPK;
+import com.cempresariales.servicio.commons.model.entity.EvaluacionHasEncabezadoPK;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +27,12 @@ public class EvaluacionServiceImpl implements EvaluacionService {
 
     @Autowired
     private EvaluacionDao evaluacionDao;
+    @Autowired
+    private RespuestaService respuestaService;
+    @Autowired
+    private EvaluacionHasEncabezadoService evaluacionHasEncabezadoService;
+    @Autowired
+    private ChecklistHasEvaluacionService checklistHasEvaluacionService;
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -189,7 +198,7 @@ public class EvaluacionServiceImpl implements EvaluacionService {
 
 
     @Override
-    public List<MedicionDTO> findEvaByAgenciasDTO(Long idEmpresa, String agencias,Long estado) {
+    public List<MedicionDTO> findEvaByAgenciasDTO(Long idEmpresa, String agencias, Long estado, Boolean activo) {
 
         try {
 
@@ -203,19 +212,23 @@ public class EvaluacionServiceImpl implements EvaluacionService {
                     " join Evaluacion e on e.idEmpleado = emp.idEmpleado" +
                     " join EstadoEvaluacion ee on ee.idEstado = e.estadoEvaluacionIdEstado.idEstado" +
                     " where e.puntajeEvaluacion between rd.minimoRango and rd.maximoRango" +
-                    " and ag.idAgencia in " + "(" + agencias + ") ");
+                    " and ag.idAgencia in " + "(" + agencias + ")   ");
 
 
-            if(idEmpresa == 0)
+            if (idEmpresa == 0)
                 queryString.append(" and ep.idEmpresa > 0");
-            else queryString.append(" and ep.idEmpresa = "+idEmpresa);
-            if(estado != 0)
-                queryString.append(" and ee.idEstado = "+estado);
+            else queryString.append(" and ep.idEmpresa = " + idEmpresa);
+            if (estado != 0)
+                queryString.append(" and ee.idEstado = " + estado);
+
+            if (activo)
+                queryString.append(" and e.activoEvaluacion = 1");
 
 
-
-            queryString.append(" group by ep.idEmpresa, ag.idAgencia, emp.idEmpleado,e.idEvaluacion,ee.idEstado, ep.nombreEmpresa, ag.nombreAgencia, emp.nombreEmpleado, rl.nombreRol,rd.nombreRango, rd.colorRango, e.observacionEvaluacion, e.puntajeEvaluacion, e.horaInicioEvaluacion, e.horaFinEvaluacion,e.atencionEvaluacion, e.contactoEvaluacion, e.esperaEvaluacion, ep.imagenEmpresa, emp.fotoEmpleado, ag.emailAgencia, ag.telefonoAgencia, ag.activoAgencia, ag.direccionAgencia" +
-                    " order by emp.nombreEmpleado ");
+            //queryString.append(" group by ep.idEmpresa, ag.idAgencia, emp.idEmpleado,e.idEvaluacion,ee.idEstado, ep.nombreEmpresa, ag.nombreAgencia, emp.nombreEmpleado, rl.nombreRol,rd.nombreRango, rd.colorRango, e.observacionEvaluacion, e.puntajeEvaluacion, e.horaInicioEvaluacion, e.horaFinEvaluacion,e.atencionEvaluacion, e.contactoEvaluacion, e.esperaEvaluacion, ep.imagenEmpresa, emp.fotoEmpleado, ag.emailAgencia, ag.telefonoAgencia, ag.activoAgencia, ag.direccionAgencia" +
+            //" order by emp.nombreEmpleado ");
+            queryString.append(" group by e.idEvaluacion" +
+                    " order by e.idEvaluacion asc");
 
             System.out.println("queryString: " + queryString.toString());
 
@@ -250,6 +263,20 @@ public class EvaluacionServiceImpl implements EvaluacionService {
     @Override
     @Transactional
     public void delete(Long id) {
+
+        //se eliminan respuestas
+        respuestaService.findByIdEvaluacion(id).forEach(respuesta -> respuestaService.delete(respuesta.getIdRespuesta()));
+        //se eliminan evaluacionHasEncabezadoService
+        evaluacionHasEncabezadoService.findByIdEvaluacion(id)
+                .forEach(evaluacionHasEncabezado -> evaluacionHasEncabezadoService
+                        .delete(
+                                new EvaluacionHasEncabezadoPK(evaluacionHasEncabezado.getEvaluacionHasEncabezadoPK().getEvaluacionIdEvaluacion(), evaluacionHasEncabezado.getEvaluacionHasEncabezadoPK().getEncabezadoIdEncabezado())));
+        //se elimina checklistHasEvaluacionService
+        checklistHasEvaluacionService.findCheckListEvaluacionByEvaluacion(id)
+                .forEach(checklistHasEvaluacion -> checklistHasEvaluacionService
+                        .delete(
+                                new ChecklistHasEvaluacionPK(checklistHasEvaluacion.getChecklistHasEvaluacionPK().getChecklistIdChecklist(), checklistHasEvaluacion.getChecklistHasEvaluacionPK().getEvaluacionIdEvaluacion())));
+
         evaluacionDao.deleteById(id);
     }
 
@@ -468,13 +495,13 @@ public class EvaluacionServiceImpl implements EvaluacionService {
                     entityManager.createQuery(queryStr, EncabezadoReporteBloquesDTO.class);
             List<EncabezadoReporteBloquesDTO> results = consulta.getResultList();
 
-System.out.println("DATA 1: "+results.size());
+            System.out.println("DATA 1: " + results.size());
 
             List<ReporteBloquesDTO> list = new ArrayList<>();
 
             for (EncabezadoReporteBloquesDTO encabezado : results) {
                 ReporteBloquesDTO reporte = new ReporteBloquesDTO();
-                List<DetalleReporteBloquesDTO> listaDetalle =  new ArrayList<>();
+                List<DetalleReporteBloquesDTO> listaDetalle = new ArrayList<>();
                 listaDetalle = detalleBloquesbyAgencias(encabezado.getIdChecklist(), encabezado.getIdEvaluacion());
                 reporte.setEncabezado(encabezado);
                 reporte.setDetalle(listaDetalle);
@@ -483,10 +510,8 @@ System.out.println("DATA 1: "+results.size());
             }
 
 
-
             Gson gson = new Gson();
             String jsonInString = gson.toJson(list);
-
 
 
             return jsonInString;

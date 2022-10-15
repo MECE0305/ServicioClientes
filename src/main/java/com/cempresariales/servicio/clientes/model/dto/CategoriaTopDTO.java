@@ -10,14 +10,14 @@ public class CategoriaTopDTO implements Serializable {
 
     private Long idCategoria;
     private String nombreCategoria;
-    private String promedioTotal;
+    private Double promedioTotal;
     private String promedioSeccion;
     private String promedioPreguntas;
 
     public CategoriaTopDTO() {
     }
 
-    public CategoriaTopDTO(Long idCategoria, String nombreCategoria, String promedioTotal, String promedioSeccion, String promedioPreguntas) {
+    public CategoriaTopDTO(Long idCategoria, String nombreCategoria, Double promedioTotal, String promedioSeccion, String promedioPreguntas) {
         this.idCategoria = idCategoria;
         this.nombreCategoria = nombreCategoria;
         this.promedioTotal = promedioTotal;
@@ -41,11 +41,11 @@ public class CategoriaTopDTO implements Serializable {
         this.nombreCategoria = nombreCategoria;
     }
 
-    public String getPromedioTotal() {
+    public Double getPromedioTotal() {
         return promedioTotal;
     }
 
-    public void setPromedioTotal(String promedioTotal) {
+    public void setPromedioTotal(Double promedioTotal) {
         this.promedioTotal = promedioTotal;
     }
 

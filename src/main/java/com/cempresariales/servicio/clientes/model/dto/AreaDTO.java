@@ -86,4 +86,22 @@ public class AreaDTO implements Serializable {
         this.promedio = promedio;
         this.peso = peso;
     }
+
+    public AreaDTO(String nombreCategoria, String nombreRol, String nombreAgencia, Float promedio) {
+
+        this.nombreCategoria = nombreCategoria;
+        this.nombreRol = nombreRol;
+        this.nombreAgencia = nombreAgencia;
+        this.promedio = promedio.doubleValue();
+
+    }
+
+    public AreaDTO(String nombreCategoria, String nombreRol, String nombreAgencia, Double promedio) {
+
+        this.nombreCategoria = nombreCategoria;
+        this.nombreRol = nombreRol;
+        this.nombreAgencia = nombreAgencia;
+        this.promedio = promedio;
+
+    }
 }

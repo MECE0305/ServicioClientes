@@ -19,6 +19,10 @@ public interface RespuestaDao extends JpaRepository<Respuesta, Long>{
 	@Query("select r from Respuesta r where r.checklistHasEvaluacion.checklistHasEvaluacionPK.evaluacionIdEvaluacion = ?1 and r.checklistHasEvaluacion.checklistHasEvaluacionPK.checklistIdChecklist = ?2")
 	public List<Respuesta> findByIdEvaluacionIdChecklist(@Param("evaluacionIdEvaluacion") Long evaluacionIdEvaluacion,@Param("checklistIdChecklist") Long checklistIdChecklist);
 
+
+	@Query("select r from Respuesta r where r.checklistHasEvaluacion.checklistHasEvaluacionPK.evaluacionIdEvaluacion = ?1 ")
+	public List<Respuesta> findByIdEvaluacion(@Param("evaluacionIdEvaluacion") Long evaluacionIdEvaluacion);
+
 	/*@Query("select r from Respuesta r where r.checklistHasEvaluacion.checklistHasEvaluacionPK.evaluacionIdEvaluacion in (" +
 			"select ce.checklistHasEvaluacionPK.evaluacionIdEvaluacion from ChecklistHasEvaluacion ce where ce.activo = true and ce.checklistHasEvaluacionPK.evaluacionIdEvaluacion in (" +
 			"select ev.idEvaluacion from Evaluacion ev where ev.activoEvaluacion = true and  ev.idEmpleado in (" +

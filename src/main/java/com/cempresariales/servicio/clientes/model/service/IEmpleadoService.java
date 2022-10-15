@@ -3,12 +3,15 @@ package com.cempresariales.servicio.clientes.model.service;
 import java.util.Collection;
 import java.util.List;
 
+import com.cempresariales.servicio.clientes.model.dto.EmpleadoDTO;
 import com.cempresariales.servicio.clientes.model.dto.TiempoAtencionDTO;
 import com.cempresariales.servicio.commons.model.entity.Agencia;
 import com.cempresariales.servicio.commons.model.entity.Empleado;
 
 public interface IEmpleadoService {
 	public List<Empleado> findAll();
+
+	public List<EmpleadoDTO> findAllDTO();
 
 	public Empleado findById(Long id);
 

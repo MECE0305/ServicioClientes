@@ -16,6 +16,7 @@ public class MedicionDTO implements Serializable {
     private Float puntajeEvaluacion;
     private Date horaInicioEvaluacion,horaFinEvaluacion,atencionEvaluacion,contactoEvaluacion, esperaEvaluacion;
 
+
     public MedicionDTO() {
         super();
     }

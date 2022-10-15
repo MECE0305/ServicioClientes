@@ -80,9 +80,9 @@ public class AreaController {
 
 
 
-	@GetMapping("/findPromedioPorAgenciaArea/{idEmpresa}/{idAgencia}/{idRol}/{idZonaE}/{idEncabezado}")
-	public List<AreaDTO> findPromedioPorAgenciaArea(@PathVariable Long idEmpresa,@PathVariable Long idAgencia,@PathVariable Long idRol,@PathVariable Long idZonaE,@PathVariable Long idEncabezado) {
-		return repo.findPromedioPorAgenciaArea(idEmpresa,idAgencia,idRol,idZonaE, idEncabezado);
+	@GetMapping("/findPromedioPorAgenciaArea/{idEmpresa}/{idAgencia}/{idRol}/{idZonaE}/{idEncabezado}/{groupBy}")
+	public List<AreaDTO> findPromedioPorAgenciaArea(@PathVariable Long idEmpresa,@PathVariable Long idAgencia,@PathVariable Long idRol,@PathVariable Long idZonaE,@PathVariable Long idEncabezado,@PathVariable Integer groupBy) {
+		return repo.findPromedioPorAgenciaArea(idEmpresa,idAgencia,idRol,idZonaE, idEncabezado, groupBy);
 	}
 
 	@GetMapping("/findPromedioPorAgencia/{idAgencia}")

@@ -26,5 +26,8 @@ public interface RespuestaService {
 
 	public Double puntuacionEmpleadoByEvaluacion(Long idEvaluacion, Long idEmpleado);
 
+	public List<Respuesta> findByIdEvaluacion(Long evaluacionIdEvaluacion);
+
+
 
 }

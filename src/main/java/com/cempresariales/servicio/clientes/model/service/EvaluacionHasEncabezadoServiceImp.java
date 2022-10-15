@@ -35,4 +35,9 @@ public class EvaluacionHasEncabezadoServiceImp implements EvaluacionHasEncabezad
 		repo.deleteById(id);
 	}
 
+	@Override
+	public List<EvaluacionHasEncabezado> findByIdEvaluacion(Long idEvaluacion) {
+		return repo.findByIdEvaluacion(idEvaluacion);
+	}
+
 }

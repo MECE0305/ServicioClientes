@@ -162,6 +162,10 @@ public class RolServiceImp implements IRolService {
 
         try {
 
+            if(idEmpresa == null)
+            {
+                idEmpresa = 0L;
+            }
             String queryStr = "SELECT r from Agencia ag INNER JOIN" +
                     " Empleado emp ON ag.idAgencia = emp.agenciaIdAgencia.idAgencia INNER JOIN" +
                     " RolHasEmpleado re ON emp.idEmpleado = re.rolHasEmpleadoPK.empleadoIdEmpleado AND " +

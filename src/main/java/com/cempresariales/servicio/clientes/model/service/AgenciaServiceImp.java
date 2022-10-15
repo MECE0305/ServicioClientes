@@ -114,7 +114,6 @@ public class AgenciaServiceImp implements IAgenciaService {
     }
 
 
-
     @Override
     public List<AgenciasDTO> findAgenciasPorRol(Long idEmpresa, Long idRol, List<Long> IdAgencias) {
         try {
@@ -146,23 +145,46 @@ public class AgenciaServiceImp implements IAgenciaService {
         try {
 
 
-            String queryStr = "select new com.cempresariales.servicio.clientes.model.dto.AgenciasDTO(ag.idAgencia, ag.nombreAgencia, ROUND(avg(ev.puntajeEvaluacion),2) as promedio, r.nombreRol)" +
+            StringBuilder queryStr = new StringBuilder("select new com.cempresariales.servicio.clientes.model.dto.AgenciasDTO(ag.idAgencia, ag.nombreAgencia, ROUND(avg(ev.puntajeEvaluacion),2) as promedio, r.nombreRol)" +
                     " from Agencia ag INNER JOIN " +
                     " Empleado e ON ag.idAgencia = e.agenciaIdAgencia.idAgencia INNER JOIN " +
                     " RolHasEmpleado re ON e.idEmpleado = re.rolHasEmpleadoPK.empleadoIdEmpleado INNER JOIN " +
                     " Rol r ON re.rolHasEmpleadoPK.rolIdRol = r.idRol INNER JOIN" +
                     " Evaluacion ev ON e.idEmpleado = ev.idEmpleado INNER JOIN " +
                     " EvaluacionHasEncabezado ehe ON ehe.evaluacionHasEncabezadoPK.evaluacionIdEvaluacion = ev.idEvaluacion " +
-                    " WHERE  ag.empresaIdEmpresa.idEmpresa = ?1 and ag.idZonaEstructural = ?2 and ehe.evaluacionHasEncabezadoPK.encabezadoIdEncabezado = ?3 and r.idRol = ?4 and ag.idAgencia in :cadena"+
-                    " group by ag.idAgencia order by promedio";
+                    " WHERE  ag.idAgencia in :cadena");
 
+            if (idEmpresa != 0) {
+                queryStr.append(" and ag.empresaIdEmpresa.idEmpresa = ?1");
+            }
+            if (idzonaEs != 0) {
+                queryStr.append(" and ag.idZonaEstructural = ?2");
+            }
+            if (idEncabezado != 0) {
+                queryStr.append(" and ehe.evaluacionHasEncabezadoPK.encabezadoIdEncabezado = ?3");
+            }
+            if (idRol != 0) {
+                queryStr.append(" and r.idRol = ?4");
+            }
 
-            TypedQuery<AgenciasDTO> query = entityManager.createQuery(queryStr, AgenciasDTO.class).setMaxResults(10);
-            query.setParameter(1, idEmpresa);
-            query.setParameter(2, idzonaEs);
-            query.setParameter(3, idEncabezado);
-            query.setParameter(4, idRol);
+            queryStr.append(" group by ag.idAgencia order by promedio");
+
+            TypedQuery<AgenciasDTO> query = entityManager.createQuery(queryStr.toString(), AgenciasDTO.class).setMaxResults(10);
+
             query.setParameter("cadena", IdAgencias);
+
+            if (idEmpresa != 0) {
+                query.setParameter(1, idEmpresa);
+            }
+            if (idzonaEs != 0) {
+                query.setParameter(2, idzonaEs);
+            }
+            if (idEncabezado != 0) {
+                query.setParameter(3, idEncabezado);
+            }
+            if (idRol != 0) {
+                query.setParameter(4, idRol);
+            }
 
             return query.getResultList();
         } catch (Exception e) {
@@ -249,21 +271,37 @@ public class AgenciaServiceImp implements IAgenciaService {
     public List<AgenciasDTO> findPromedioPorEmpresaZonaEnca(List<Long> IdAgencias, Long idEmpresa, Long idEncabezado, Long idZonaEs) {
         try {
 
-            String queryStr = "select new com.cempresariales.servicio.clientes.model.dto.AgenciasDTO(ag.idAgencia, ag.nombreAgencia, ROUND(avg(eva.puntajeEvaluacion),2) as promedio, ag.ceoAgencia)" +
+            StringBuilder queryStr = new StringBuilder("select new com.cempresariales.servicio.clientes.model.dto.AgenciasDTO(ag.idAgencia, ag.nombreAgencia, ROUND(avg(eva.puntajeEvaluacion),2) as promedio, ag.ceoAgencia)" +
                     " from Agencia ag " +
                     " join Empleado emp on emp.agenciaIdAgencia.idAgencia = ag.idAgencia" +
                     " join Evaluacion eva on emp.idEmpleado = eva.idEmpleado " +
                     " join EvaluacionHasEncabezado ehe on ehe.evaluacionHasEncabezadoPK.evaluacionIdEvaluacion = eva.idEvaluacion " +
-                    " where ag.idAgencia in :cadena and ag.empresaIdEmpresa.idEmpresa = ?1 and ehe.evaluacionHasEncabezadoPK.encabezadoIdEncabezado = ?2 and ag.idZonaEstructural = ?3 " +
-                    " group by ag.idAgencia order by promedio desc";
+                    " where ag.idAgencia in :cadena ");
 
+            if (idEmpresa != 0) {
+                queryStr.append(" and ag.empresaIdEmpresa.idEmpresa = ?1");
+            }
+            if (idEncabezado != 0) {
+                queryStr.append(" and ehe.evaluacionHasEncabezadoPK.encabezadoIdEncabezado = ?2");
+            }
+            if (idZonaEs != 0) {
+                queryStr.append(" and ag.idZonaEstructural = ?3");
+            }
 
+            queryStr.append(" group by ag.idAgencia order by promedio desc");
 
-            TypedQuery<AgenciasDTO> query = entityManager.createQuery(queryStr, AgenciasDTO.class).setMaxResults(10);
+            TypedQuery<AgenciasDTO> query = entityManager.createQuery(queryStr.toString(), AgenciasDTO.class).setMaxResults(10);
             query.setParameter("cadena", IdAgencias);
-            query.setParameter(1, idEmpresa);
-            query.setParameter(2, idEncabezado);
-            query.setParameter(3, idZonaEs);
+
+            if (idEmpresa != 0) {
+                query.setParameter(1, idEmpresa);
+            }
+            if (idEncabezado != 0) {
+                query.setParameter(2, idEncabezado);
+            }
+            if (idZonaEs != 0) {
+                query.setParameter(3, idZonaEs);
+            }
 
             return query.getResultList();
         } catch (Exception e) {

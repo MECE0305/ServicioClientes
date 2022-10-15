@@ -141,6 +141,10 @@ public class RespuestaServiceImpl implements RespuestaService {
 		}
 	}
 
+	@Override
+	public List<Respuesta> findByIdEvaluacion(Long evaluacionIdEvaluacion) {
+		return respuestaDao.findByIdEvaluacion(evaluacionIdEvaluacion);
+	}
 
 
 }

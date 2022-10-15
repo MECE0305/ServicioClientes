@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.List;
 
 import com.cempresariales.servicio.clientes.model.dto.AgenciasDTO;
+import com.cempresariales.servicio.clientes.model.dto.EmpleadoDTO;
 import com.cempresariales.servicio.clientes.model.dto.TiempoAtencionDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -37,8 +38,8 @@ public class EmpleadoController {
     }
 
     @GetMapping("/listarAll")
-    public List<Empleado> buscarAllEmpleado() {
-        return empleadoService.findAll();
+    public List<EmpleadoDTO> buscarAllEmpleado() {
+        return empleadoService.findAllDTO();
     }
 
     @GetMapping("/ver/{id}")

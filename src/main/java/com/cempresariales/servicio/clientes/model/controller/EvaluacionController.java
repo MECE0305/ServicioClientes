@@ -102,9 +102,13 @@ public class EvaluacionController {
         return repo.detalleBloquesbyAgencias(idChecklist, idEvaluacion);
     }
 
-    @GetMapping("/findEvaByAgenciasDTO/{idEmpresa}/{agencias}/{estado}")
-    public List<MedicionDTO> findEvaByAgenciasDTO(@PathVariable Long idEmpresa, @PathVariable String agencias,  @PathVariable Long estado) {
-        return repo.findEvaByAgenciasDTO(idEmpresa, agencias, estado);
+    @GetMapping("/findEvaByAgenciasDTO/{idEmpresa}/{agencias}/{estado}/{activo}")
+    public List<MedicionDTO> findEvaByAgenciasDTO(@PathVariable Long idEmpresa, @PathVariable String agencias,  @PathVariable Long estado, @PathVariable Boolean activo) {
+
+        List<MedicionDTO> lista =  repo.findEvaByAgenciasDTO(idEmpresa, agencias, estado, activo);
+        System.out.println("---------------"+lista.size());
+
+        return lista;
     }
 
 }

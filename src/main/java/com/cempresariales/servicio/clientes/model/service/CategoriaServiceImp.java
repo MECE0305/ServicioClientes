@@ -94,7 +94,7 @@ public class CategoriaServiceImp implements CategoriaService {
             if (orderBy.equals("pregunta"))
                 order = "5";
 
-            String queryStr = "select new com.cempresariales.servicio.clientes.model.dto.CategoriaTopDTO(c.idCategoria, c.nombreCategoria, sum(eva.promedioTotal), sum(eva.promedioSeccion), sum(eva.promedioPregunta) )" +
+            String queryStr = "select new com.cempresariales.servicio.clientes.model.dto.CategoriaTopDTO(c.idCategoria, c.nombreCategoria, sum(eva.puntajeEvaluacion)/count(c.idCategoria), sum(eva.promedioSeccion), sum(eva.promedioPregunta) )" +
                     " from Categoria c" +
                     " join CatalogoPregunta cp on c.idCategoria = cp.categoria.idCategoria" +
                     " join Respuesta r on r.idCatalogoPregunta = cp.idCatalogoPregunta" +

@@ -27,6 +27,11 @@ public class EmpleadoHasRolServiceImp implements EmpleadoHasRolService {
 	}
 
 	@Override
+	public List<String> nombreRolesPorEmpleado(Long id) {
+		return repo.nombreRolesPorEmpleado(id);
+	}
+
+	@Override
 	public RolHasEmpleado save(RolHasEmpleado entidad) {
 		return repo.save(entidad);
 	}
@@ -44,6 +49,11 @@ public class EmpleadoHasRolServiceImp implements EmpleadoHasRolService {
 	@Override
 	public List<Empleado> findByRol(Long id) {
 		return repo.findByRol(id);
+	}
+
+	@Override
+	public List<RolHasEmpleado> findRolEmpleadoActive() {
+		return repo.findRolEmpleadoActive();
 	}
 
 }
